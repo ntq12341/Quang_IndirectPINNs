@@ -14,13 +14,21 @@ from .residuals import adjoint_residual, state_residual, stationarity_residual
 from .sampling import PointSet
 
 
+def problem_title(problem) -> str:
+    return {
+        "pdf_smoke": "Cubic reaction–diffusion test",
+        "linear_kkt": "Linear boundary-control test",
+        "nonlinear_kkt": "Nonlinear boundary-control test",
+    }.get(problem.name, problem.name.replace("_", " ").title())
+
+
 def _array(value: torch.Tensor) -> np.ndarray:
     return value.detach().cpu().numpy()
 
 
 def _save(fig: plt.Figure, path: Path) -> None:
     fig.tight_layout()
-    fig.savefig(path, dpi=300, bbox_inches="tight")
+    fig.savefig(path, dpi=300, bbox_inches="tight", facecolor="white", transparent=False)
     plt.close(fig)
 
 
@@ -54,15 +62,18 @@ def plot_state_comparison(direct, indirect, problem, out: Path, n: int, device: 
     errors = [np.abs(arrays[1] - arrays[0]), np.abs(arrays[2] - arrays[0])]
     lo, hi = min(a.min() for a in arrays), max(a.max() for a in arrays)
     err_hi = max(e.max() for e in errors)
-    fig, axes = plt.subplots(2, 3, figsize=(15, 8))
+    fig = plt.figure(figsize=(15, 9))
+    outer = fig.add_gridspec(2, 1, height_ratios=(1, 1), hspace=0.34)
+    top = outer[0].subgridspec(1, 3, wspace=0.32)
+    bottom = outer[1].subgridspec(1, 2, wspace=0.25)
+    top_axes = [fig.add_subplot(top[0, index]) for index in range(3)]
+    error_axes = [fig.add_subplot(bottom[0, index]) for index in range(2)]
     extent = (0, 1, 0, problem.final_time)
-    for ax, data, title in zip(axes[0], arrays, ("Exact state", "Direct PINN", "Indirect PINN")):
+    for ax, data, title in zip(top_axes, arrays, ("Exact state", "Direct PINN", "Indirect PINN")):
         _heat(ax, data, title, extent, vmin=lo, vmax=hi)
-    _heat(axes[1, 0], errors[0], "Direct absolute error", extent, cmap="magma", vmin=0, vmax=err_hi)
-    _heat(axes[1, 1], errors[1], "Indirect absolute error", extent, cmap="magma", vmin=0, vmax=err_hi)
-    axes[1, 2].axis("off")
-    axes[1, 2].text(0.05, 0.7, f"Direct max error: {errors[0].max():.3e}\nIndirect max error: {errors[1].max():.3e}\n\nShared color scales are used.", fontsize=12, va="top")
-    fig.suptitle(f"State comparison — {problem.name}", fontsize=15)
+    _heat(error_axes[0], errors[0], f"Direct absolute error (max = {errors[0].max():.3e})", extent, cmap="magma", vmin=0, vmax=err_hi)
+    _heat(error_axes[1], errors[1], f"Indirect absolute error (max = {errors[1].max():.3e})", extent, cmap="magma", vmin=0, vmax=err_hi)
+    fig.suptitle(f"State comparison — {problem_title(problem)}", fontsize=15, y=0.995)
     _save(fig, out / "state_comparison.png")
 
 
@@ -81,28 +92,23 @@ def plot_state_slices(direct, indirect, problem, out: Path, device: str):
         ax.set(title=f"$t={time:g}$", xlabel="$x$", ylabel="$y$")
         ax.grid(alpha=0.25)
     axes[0, 0].legend()
-    fig.suptitle(f"State slices — {problem.name}", fontsize=15)
+    fig.suptitle(f"State slices — {problem_title(problem)}", fontsize=15)
     _save(fig, out / "state_slices.png")
 
 
 def plot_controls(direct, indirect, problem, out: Path, device: str):
     t = torch.linspace(0, problem.final_time, 501, dtype=torch.float64, device=device).reshape(-1, 1)
-    fig, axes = plt.subplots(2, 2, figsize=(13, 8), sharex=True)
+    fig, axes = plt.subplots(1, 2, figsize=(13, 4.8), sharex=True, sharey=True)
     for side in (0, 1):
         with torch.no_grad():
             exact = problem.control_exact(t, side)
             dp, ip = direct.control(t, side), indirect.control(t, side)
-        axes[0, side].plot(_array(t), _array(exact), "k-", lw=2, label="Exact")
-        axes[0, side].plot(_array(t), _array(dp), "--", label="Direct")
-        axes[0, side].plot(_array(t), _array(ip), ":", lw=2, label="Indirect")
-        axes[0, side].set(title=f"Control at x={side}", ylabel="$u(t)$")
-        axes[1, side].semilogy(_array(t), np.maximum(np.abs(_array(dp - exact)), 1e-14), "--", label="Direct error")
-        axes[1, side].semilogy(_array(t), np.maximum(np.abs(_array(ip - exact)), 1e-14), ":", lw=2, label="Indirect error")
-        axes[1, side].set(xlabel="$t$", ylabel="absolute error")
-        for ax in axes[:, side]: ax.grid(alpha=0.25)
-    axes[0, 0].legend()
-    axes[1, 0].legend()
-    fig.suptitle(f"Boundary controls — {problem.name}", fontsize=15)
+        axes[side].semilogy(_array(t), np.maximum(np.abs(_array(dp - exact)), 1e-14), "--", lw=2, label="Direct")
+        axes[side].semilogy(_array(t), np.maximum(np.abs(_array(ip - exact)), 1e-14), ":", lw=2.5, label="Indirect")
+        axes[side].set(title=f"Boundary $x={side}$", xlabel="$t$", ylabel="Absolute control error" if side == 0 else None)
+        axes[side].grid(alpha=0.25)
+    axes[0].legend()
+    fig.suptitle(f"Boundary-control errors — {problem_title(problem)}", fontsize=15)
     _save(fig, out / "control_comparison.png")
 
 
@@ -113,13 +119,12 @@ def plot_adjoint(indirect, problem, out: Path, n: int, device: str):
         pred = indirect.adjoint(x.reshape(-1, 1), t.reshape(-1, 1)).reshape_as(x)
     ea, pa = _array(exact), _array(pred)
     error = np.abs(pa - ea)
-    lo, hi = min(ea.min(), pa.min()), max(ea.max(), pa.max())
-    fig, axes = plt.subplots(1, 3, figsize=(15, 4.5))
+    signed_limit = max(float(np.max(np.abs(ea))), float(np.max(np.abs(pa))), 1e-14)
+    fig, axes = plt.subplots(1, 2, figsize=(11, 4.5))
     extent = (0, 1, 0, problem.final_time)
-    _heat(axes[0], ea, "Exact adjoint", extent, vmin=lo, vmax=hi)
-    _heat(axes[1], pa, "Indirect adjoint", extent, vmin=lo, vmax=hi)
-    _heat(axes[2], error, "Absolute error", extent, cmap="magma")
-    fig.suptitle(f"Adjoint variable — {problem.name}", fontsize=15)
+    _heat(axes[0], pa, "Indirect adjoint", extent, cmap="coolwarm", vmin=-signed_limit, vmax=signed_limit)
+    _heat(axes[1], error, f"Absolute error (max = {error.max():.3e})", extent, cmap="magma")
+    fig.suptitle(f"Adjoint variable — {problem_title(problem)}", fontsize=15)
     _save(fig, out / "indirect_adjoint.png")
 
 
@@ -163,7 +168,7 @@ def plot_residuals(direct, indirect, problem, out: Path, n: int, device: str):
     extent = (0, 1, 0, problem.final_time)
     for ax, data, title in zip(axes, (direct_state, indirect_state, indirect_adjoint), ("Direct $|R_y|$", "Indirect $|R_y|$", "Indirect $|R_\\lambda|$")):
         _heat(ax, data, title, extent, cmap="magma", log=True, vmin=vmin, vmax=vmax)
-    fig.suptitle(f"Verification-grid residuals — {problem.name}", fontsize=15)
+    fig.suptitle(f"Verification-grid residuals — {problem_title(problem)}", fontsize=15)
     _save(fig, out / "residual_maps.png")
 
     t = torch.linspace(0, problem.final_time, 501, dtype=torch.float64, device=device).reshape(-1, 1)
@@ -173,26 +178,49 @@ def plot_residuals(direct, indirect, problem, out: Path, n: int, device: str):
         tt = t.detach().clone().requires_grad_(True)
         residual = stationarity_residual(indirect, problem, PointSet(x, tt), side)
         ax.semilogy(_array(t), np.maximum(np.abs(_array(residual)), 1e-14), label=f"x={side}")
-    ax.set(title=f"Stationarity residual — {problem.name}", xlabel="$t$", ylabel="$|\\alpha u + \\nu\\partial_n\\lambda|$")
+    ax.set(title=f"Stationarity residual — {problem_title(problem)}", xlabel="$t$", ylabel="$|\\alpha u + \\nu\\partial_n\\lambda|$")
     ax.grid(alpha=0.25)
     ax.legend()
     _save(fig, out / "stationarity_residual.png")
 
 
-def plot_metrics(direct_data, indirect_data, out: Path):
-    keys = ("state_relative_l2", "control_relative_l2")
+def plot_metrics(direct_model, indirect_model, problem, out: Path, device: str = "cpu"):
     labels = ("State error", "Control error")
-    direct = [direct_data["metrics"][key] for key in keys]
-    indirect = [indirect_data["metrics"][key] for key in keys]
-    x = np.arange(len(keys))
+    x_axis = torch.linspace(0, 1, 101, dtype=torch.float64, device=device)
+    t_axis = torch.linspace(0, problem.final_time, 101, dtype=torch.float64, device=device)
+    gx, gt = torch.meshgrid(x_axis, t_axis, indexing="ij")
+    xf, tf = gx.reshape(-1, 1), gt.reshape(-1, 1)
+
+    def model_rmse(model):
+        with torch.no_grad():
+            state_error = model.state(xf, tf) - problem.state_exact(xf, tf)
+            state_value = float(torch.sqrt(torch.mean(state_error.square())))
+            boundary_mse = []
+            times = t_axis.reshape(-1, 1)
+            for side in (0, 1):
+                error = model.control(times, side) - problem.control_exact(times, side)
+                boundary_mse.append(torch.mean(error.square()))
+            control_value = float(torch.sqrt(sum(boundary_mse) / 2.0))
+        return [state_value, control_value]
+
+    direct = model_rmse(direct_model)
+    indirect = model_rmse(indirect_model)
+    x = np.arange(len(labels))
     fig, ax = plt.subplots(figsize=(8, 5))
     width = 0.35
-    ax.bar(x - width / 2, direct, width, label="Direct")
-    ax.bar(x + width / 2, indirect, width, label="Indirect")
+    direct_bars = ax.bar(x - width / 2, direct, width, label="Direct")
+    indirect_bars = ax.bar(x + width / 2, indirect, width, label="Indirect")
     ax.set_xticks(x, labels)
     ax.set_yscale("log")
-    ax.set_ylabel("reported error")
-    ax.set_title("Accuracy comparison")
+    titles = {
+        "linear_kkt": "RMSE comparison — Linear boundary-control test",
+        "pdf_smoke": "RMSE comparison — Cubic reaction–diffusion test",
+        "nonlinear_kkt": "RMSE comparison — Nonlinear boundary-control test",
+    }
+    ax.set_ylabel("Root mean squared error (RMSE)")
+    ax.set_title(titles.get(problem.name, f"RMSE comparison — {problem.name}"))
+    for bars in (direct_bars, indirect_bars):
+        ax.bar_label(bars, labels=[f"{bar.get_height():.2e}" for bar in bars], padding=4, fontsize=9)
     ax.grid(axis="y", alpha=0.25)
     ax.legend()
     _save(fig, out / "metric_comparison.png")

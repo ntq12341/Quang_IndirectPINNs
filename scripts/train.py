@@ -51,7 +51,7 @@ def main() -> None:
         device=args.device,
     )
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    torch.save({"method": args.method, "problem": problem.name, "state_dict": model.state_dict(), "config": vars(cfg), "weights": weights, "history": history, "metrics": metrics, "indicator": indicator}, args.output)
+    torch.save({"method": args.method, "problem": problem.name, "control_parameterization": "shared_U_psi(x,t)", "state_dict": model.state_dict(), "config": vars(cfg), "weights": weights, "history": history, "metrics": metrics, "indicator": indicator}, args.output)
     print(json.dumps({"metrics": metrics, "indicator": indicator}, indent=2))
 
 

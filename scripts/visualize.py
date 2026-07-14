@@ -17,6 +17,11 @@ def load_checkpoint(path: Path, expected_method: str, device: str):
     data = torch.load(path, map_location=device, weights_only=False)
     if data["method"] != expected_method:
         raise ValueError(f"{path} contains method={data['method']}, expected {expected_method}")
+    if data.get("control_parameterization") != "shared_U_psi(x,t)":
+        raise ValueError(
+            f"{path} uses the legacy two-network boundary control. "
+            "Retrain it with the current shared U_psi(x,t) architecture before visualization."
+        )
     model = DirectPINN() if expected_method == "direct" else IndirectPINN()
     model.to(device=device, dtype=torch.float64)
     model.load_state_dict(data["state_dict"])
@@ -44,7 +49,7 @@ def main() -> None:
     plot_adjoint(indirect, problem, args.output, args.grid, args.device)
     plot_histories(direct_data, indirect_data, args.output)
     plot_residuals(direct, indirect, problem, args.output, args.grid, args.device)
-    plot_metrics(direct_data, indirect_data, args.output)
+    plot_metrics(direct, indirect, problem, args.output, args.device)
     print(f"Created 8 figures in {args.output.resolve()}")
 
 

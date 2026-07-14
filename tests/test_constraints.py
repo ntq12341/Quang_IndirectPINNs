@@ -1,5 +1,15 @@
 import torch
-from src.models import IndirectPINN
+from src.models import BoundaryControl, IndirectPINN
+
+
+def test_boundary_control_is_one_shared_network():
+    control = BoundaryControl(hidden=(8,)).double()
+    assert hasattr(control, "net")
+    assert not hasattr(control, "left")
+    assert not hasattr(control, "right")
+    t = torch.linspace(0, 1, 5, dtype=torch.float64).reshape(-1, 1)
+    assert control(t, 0).shape == (5, 1)
+    assert control(t, 1).shape == (5, 1)
 
 
 def test_indirect_hard_constraints():
@@ -13,4 +23,3 @@ def test_indirect_hard_constraints():
     x = torch.linspace(0, 1, 17, dtype=torch.float64).reshape(-1, 1)
     terminal = torch.ones_like(x)
     assert torch.equal(model.adjoint(x, terminal), torch.zeros_like(x))
-

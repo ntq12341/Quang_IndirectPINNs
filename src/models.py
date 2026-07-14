@@ -8,14 +8,17 @@ from .networks import MLP
 class BoundaryControl(nn.Module):
     def __init__(self, hidden: tuple[int, ...] = (30, 30, 30)):
         super().__init__()
-        self.left = MLP(1, hidden)
-        self.right = MLP(1, hidden)
+        # One shared network U_psi(x, t), evaluated only at x=0 and x=1.
+        self.net = MLP(2, hidden)
 
     def forward(self, t: torch.Tensor, side: int) -> torch.Tensor:
-        return (self.left if side == 0 else self.right)(t)
+        if side not in (0, 1):
+            raise ValueError("side must be 0 or 1")
+        x = torch.full_like(t, float(side))
+        return self.net(torch.cat((x, t), dim=1))
 
     def lifting(self, x: torch.Tensor, t: torch.Tensor) -> torch.Tensor:
-        return (1.0 - x) * self.left(t) + x * self.right(t)
+        return (1.0 - x) * self.forward(t, 0) + x * self.forward(t, 1)
 
 
 class DirectPINN(nn.Module):
@@ -44,4 +47,3 @@ class IndirectPINN(nn.Module):
     def adjoint(self, x: torch.Tensor, t: torch.Tensor) -> torch.Tensor:
         raw = self.adjoint_net(torch.cat((x, t), dim=1))
         return x * (1.0 - x) * (self.final_time - t) * raw
-

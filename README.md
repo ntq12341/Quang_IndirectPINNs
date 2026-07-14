@@ -2,6 +2,8 @@
 
 PyTorch implementation of direct and indirect PINNs for a one-dimensional parabolic PDE with Dirichlet boundary control.
 
+Both methods use one shared control network `U_psi(x,t)`. Its boundary traces are evaluated as `U_psi(0,t)` and `U_psi(1,t)`; the indirect state lifting interpolates these two traces exactly.
+
 The implementation uses
 
 \[
