@@ -1,0 +1,12 @@
+{
+  "problem": "linear_kkt",
+  "epochs": 20000,
+  "n_interior": 10000,
+  "n_boundary": 2000,
+  "n_initial": 500,
+  "learning_rate": 0.001,
+  "resample_every": 500,
+  "lbfgs_iterations": 5000,
+  "weights": {"state": 1.0, "adjoint": 1.0, "stationarity": 1.0, "initial": 10.0}
+}
+

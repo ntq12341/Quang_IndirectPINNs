@@ -1,0 +1,19 @@
+[
+  {
+    "checkpoint": "outputs\\direct-linear-full.pt",
+    "method": "direct",
+    "problem": "linear_kkt",
+    "state_relative_l2": 0.0021575702927717332,
+    "control_relative_l2": 0.010991729827618122,
+    "eta": 0.005535887076912887
+  },
+  {
+    "checkpoint": "outputs\\indirect-full.pt",
+    "method": "indirect",
+    "problem": "linear_kkt",
+    "state_relative_l2": 0.001803257181794848,
+    "control_relative_l2": 0.007009063291098757,
+    "adjoint_relative_l2": 0.052298633746715596,
+    "eta": 0.001965836359413213
+  }
+]

@@ -1,0 +1,19 @@
+[
+  {
+    "checkpoint": "outputs\\direct-full.pt",
+    "method": "direct",
+    "problem": "pdf_smoke",
+    "state_relative_l2": 0.005044119041293729,
+    "control_relative_l2": 0.005962125882714561,
+    "eta": 0.003456363563535545
+  },
+  {
+    "checkpoint": "outputs\\indirect-pdf-full.pt",
+    "method": "indirect",
+    "problem": "pdf_smoke",
+    "state_relative_l2": 0.00146827435222072,
+    "control_relative_l2": 0.0014276008942923574,
+    "adjoint_relative_l2": 8.60546216512247e-05,
+    "eta": 0.0005886001851779921
+  }
+]

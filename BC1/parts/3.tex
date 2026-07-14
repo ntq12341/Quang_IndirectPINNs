@@ -1,0 +1,196 @@
+\section{Error Analysis}
+
+In this section, we establish an error estimation framework for the proposed Indirect PINN method with hard constraint. We decompose the total error into several components, derive a conditional a priori error bound, and construct a computable a posteriori error indicator that is consistent with the meshfree, collocation-based nature of PINNs. Unlike finite-element residual estimators, our indicator does not rely on a computational mesh and therefore contains no inter-element jump terms.
+
+\subsection{The Optimality System and Its Residuals}
+
+Recall the first-order optimality system for our problem: find $(y, u, \lambda)$ such that
+
+\begin{align}
+\partial_t y - \nu \Delta y + f(y) &= 0, \quad &&\text{in } Q, \label{eq:state_res}\\
+-\partial_t \lambda - \nu \Delta \lambda + f'(y) \lambda &= -(y - y_d), \quad &&\text{in } Q, \label{eq:adjoint_res}\\
+\alpha u - \partial_n \lambda &= 0, \quad &&\text{on } \Sigma, \label{eq:stat_res}\\
+y &= u, \quad &&\text{on } \Sigma, \label{eq:bc_y_res}\\
+\lambda &= 0, \quad &&\text{on } \Sigma, \label{eq:bc_lambda_res}\\
+y(x,0) &= y_0(x), \quad &&\text{in } \Omega, \\
+\lambda(x,T) &= 0, \quad &&\text{in } \Omega.
+\end{align}
+
+This is precisely the system \eqref{eq:state_opt}--\eqref{eq:bc_lambda_res} of Section~2, and we use the same constant $\alpha$ as in the cost functional \eqref{eq:cost} (we no longer introduce the separate symbols $\beta_Q,\beta_R$ used in an earlier draft, to keep notation consistent across sections; the tracking term always carries weight $1$ and the control term always carries weight $\alpha$).
+
+Let $Y_\theta$, $U_\psi$, $\Lambda_\phi$ be the neural network approximations of $y$, $u$, $\lambda$ built with the hard-constraint construction of Section~2.2.3, so that the Dirichlet conditions \eqref{eq:bc_y_res}--\eqref{eq:bc_lambda_res} hold \emph{exactly, for every parameter value}. We define the residuals of the optimality system:
+
+\begin{align}
+\mathcal{R}_y(x,t;\theta,\psi) &:= \partial_t Y_\theta - \nu \Delta Y_\theta + f(Y_\theta), \label{eq:res_y}\\
+\mathcal{R}_\lambda(x,t;\theta,\phi) &:= -\partial_t \Lambda_\phi - \nu \Delta \Lambda_\phi + f'(Y_\theta) \Lambda_\phi + (Y_\theta - y_d), \label{eq:res_lambda}\\
+\mathcal{R}_u(x,t;\psi,\phi) &:= \alpha U_\psi - \partial_n \Lambda_\phi, \quad (x,t) \in \Sigma. \label{eq:res_u}
+\end{align}
+
+Because the boundary and initial/terminal conditions are enforced by construction (hard constraints) rather than penalized, the only residuals that remain are the PDE residuals \eqref{eq:res_y}--\eqref{eq:res_u} together with the (typically small, if the hard constraint for the initial condition is not also imposed exactly) initial/terminal mismatches. The indirect PINN loss, matching \eqref{eq:indirect_loss}, is
+
+\begin{equation}
+\label{eq:loss_indirect}
+\mathcal{L}_{\text{ind}}(\theta,\psi,\phi) = w_y \mathcal{L}_y + w_\lambda \mathcal{L}_\lambda + w_u \mathcal{L}_u + w_{\text{ic}} \mathcal{L}_{\text{ic}} + w_T \mathcal{L}_T,
+\end{equation}
+
+where
+
+\begin{align}
+\mathcal{L}_y &:= \frac{1}{N_{\text{int}}} \sum_{j=1}^{N_{\text{int}}} |\mathcal{R}_y(x_j,t_j;\theta,\psi)|^2, \\
+\mathcal{L}_\lambda &:= \frac{1}{N_{\text{int}}} \sum_{j=1}^{N_{\text{int}}} |\mathcal{R}_\lambda(x_j,t_j;\theta,\phi)|^2, \\
+\mathcal{L}_u &:= \frac{1}{N_{\text{bc}}} \sum_{j=1}^{N_{\text{bc}}} |\mathcal{R}_u(x_j^b,t_j^b;\psi,\phi)|^2, \\
+\mathcal{L}_{\text{ic}} &:= \frac{1}{N_{\text{ic}}} \sum_{i=1}^{N_{\text{ic}}} |Y_\theta(x_i,0) - y_0(x_i)|^2, \\
+\mathcal{L}_T &:= \frac{1}{N_T} \sum_{i=1}^{N_T} |\Lambda_\phi(x_i,T)|^2.
+\end{align}
+
+Each $\mathcal{L}_\bullet$ is a Monte-Carlo (or quasi-Monte-Carlo) quadrature approximation of a continuous $L^2$-norm of the corresponding residual, e.g. $\mathcal{L}_y \approx \|\mathcal{R}_y\|_{L^2(Q)}^2$; this correspondence is what links the \emph{discrete, trainable} loss to the \emph{continuous} PDE residuals used in the estimates below.
+
+\subsection{Standing Assumptions}
+
+The estimates in this section are conditional on the following standing assumptions, which we state explicitly rather than leaving implicit.
+
+\begin{itemize}
+\item[(A1)] \textbf{Well-posedness.} The optimality system \eqref{eq:state_res}--\eqref{eq:bc_lambda_res} admits a unique solution $(y^*,u^*,\lambda^*)$ in an appropriate energy class, and the linearization of this system about $(y^*,\lambda^*)$ satisfies an inf-sup (stability) condition with constant $C_{\text{stab}}$.
+\item[(A2)] \textbf{Regularity of the Dirichlet control problem.} Dirichlet boundary control of a parabolic equation is, in general, a low-regularity problem: for boundary data $u\in L^2(\Sigma)$ the state $y$ is typically only a \emph{very weak solution} (transposition solution), and the trace $\partial_n\lambda|_\Sigma$ appearing in \eqref{eq:stat_res} need not exist in the classical sense (see e.g.\ Lasiecka \& Triggiani; Tr\"oltzsch, \emph{Optimal Control of Partial Differential Equations}, Ch.\,5). We assume throughout that the data $(y_0, y_d, u^*)$ are smooth enough, and $\Omega$ is regular enough, that $(y^*,\lambda^*)$ lie in $H^{2,1}(Q)$-type spaces in which all traces below are classically well defined. This is a genuine restriction, not a technicality; results that require only $u \in L^2(\Sigma)$ are outside the scope of the estimates below.
+\item[(A3)] \textbf{Nonlinearity.} $f\in C^1(\mathbb{R})$ and $f'$ is bounded below, $f'(s)\geq -c_f$ for some $c_f\geq 0$ (satisfied by the Allen--Cahn nonlinearity $f(y)=y^3-y$, for which $f'(s) = 3s^2-1 \geq -1$).
+\item[(A4)] \textbf{Approximation capacity.} The network architectures for $Y_\theta, U_\psi, \Lambda_\phi$ are rich enough that the best-approximation error $\epsilon_{\text{net}}$ defined in \eqref{eq:net_approx} can be made arbitrarily small by increasing width/depth. No explicit rate in network size is claimed here; this is treated as an assumption, not a proven property of the architecture.
+\end{itemize}
+
+\subsection{Decomposition of the Total Error}
+
+Let $e_y := y^* - Y_\theta$, $e_\lambda := \lambda^* - \Lambda_\phi$, $e_u := u^* - U_\psi$ denote the errors in the state, adjoint, and control, relative to the exact solution of the optimality system (not to a discretized/mesh solution). The total error is measured in the norm
+
+\begin{equation}
+\| (e_y, e_\lambda, e_u) \|_{\mathcal{E}}^2 := \| e_y \|_{L^2(0,T;H^1(\Omega))}^2 + \| e_\lambda \|_{L^2(0,T;H^1(\Omega))}^2 + \| e_u \|_{L^2(\Sigma)}^2.
+\end{equation}
+
+Using the triangle inequality and the stability assumption (A1), the total error can be decomposed into three main contributions:
+
+\begin{equation}
+\label{eq:decomp}
+\| (e_y, e_\lambda, e_u) \|_{\mathcal{E}} \lesssim \mathcal{E}_{\text{approx}} + \mathcal{E}_{\text{opt}} + \mathcal{E}_{\text{quad}},
+\end{equation}
+
+where:
+\begin{itemize}
+    \item $\mathcal{E}_{\text{approx}}$: best-approximation error of the neural network architecture (item (A4)),
+    \item $\mathcal{E}_{\text{opt}}$: optimization error, i.e.\ how far the trained loss \eqref{eq:loss_indirect} is from its infimum over the chosen architecture,
+    \item $\mathcal{E}_{\text{quad}}$: quadrature (sampling) error between the Monte-Carlo loss $\mathcal{L}_{\text{ind}}$ and the continuous residual norms it estimates.
+\end{itemize}
+
+We no longer list a separate $\mathcal{E}_{\text{bc}}$ term: because the Dirichlet conditions are hard-constrained (Section~2.2.3), the boundary/initial-condition error is identically zero at the level of the construction and does not contribute to \eqref{eq:decomp}; it can only re-enter indirectly through $\mathcal{E}_{\text{approx}}$ if the auxiliary networks $N_\theta, M_\phi$ are not expressive enough.
+
+\subsection{A Priori Error Estimate}
+
+\begin{theorem}[Conditional A Priori Error Estimate]
+\label{thm:apriori}
+Under Assumptions (A1)--(A3), let $(y^*, u^*, \lambda^*)$ be the exact solution of \eqref{eq:state_res}--\eqref{eq:bc_lambda_res}. Suppose the networks $Y_\theta$, $U_\psi$, $\Lambda_\phi$ can approximate $(y^*,\lambda^*,u^*)$ to accuracy $\epsilon_{\text{net}}$ in the $\mathcal{E}$-norm,
+\begin{equation}
+\label{eq:net_approx}
+\inf_{\theta,\psi,\phi} \| (y^* - Y_\theta, \lambda^* - \Lambda_\phi, u^* - U_\psi) \|_{\mathcal{E}} \leq \epsilon_{\text{net}},
+\end{equation}
+and suppose training reaches parameters $(\theta^*,\psi^*,\phi^*)$ with continuous residual norm
+\begin{equation}
+\|\mathcal{R}_y\|_{L^2(Q)}^2 + \|\mathcal{R}_\lambda\|_{L^2(Q)}^2 + \|\mathcal{R}_u\|_{L^2(\Sigma)}^2 \;\leq\; \epsilon_{\text{loss}}^2.
+\end{equation}
+Then
+\begin{equation}
+\label{eq:apriori_estimate}
+\| (y^* - Y_\theta^*, \lambda^* - \Lambda_\phi^*, u^* - U_\psi^*) \|_{\mathcal{E}} \;\lesssim\; \epsilon_{\text{net}} + C_{\text{stab}}\,\epsilon_{\text{loss}},
+\end{equation}
+with $C_{\text{stab}}$ the stability constant of Assumption (A1).
+\end{theorem}
+
+\begin{proof}[Sketch of proof]
+Write $e=(e_y,e_\lambda,e_u)$ for the error at the trained parameters, and split $e = e^{\mathrm{approx}} + e^{\mathrm{res}}$, where $e^{\mathrm{approx}}$ is the error of the \emph{best} network approximation (controlled by $\epsilon_{\text{net}}$ via (A4)) and $e^{\mathrm{res}} := (y^*-Y_\theta^*,\dots) - e^{\mathrm{approx}}$ is what remains. By linearity, $e^{\mathrm{res}}$ solves the linearization of \eqref{eq:state_res}--\eqref{eq:stat_res} about $(y^*,\lambda^*)$ with right-hand side equal to $(\mathcal{R}_y,\mathcal{R}_\lambda,\mathcal{R}_u)$ evaluated at the trained networks (this uses (A2) to make the linearization and its traces meaningful, and (A3) to control the sign of the reaction term $f'(y^*)$ so that the linearized adjoint operator is coercive up to a lower-order term, via a standard exponential-weight / G\r{a}rding-inequality argument). The stability assumption (A1) then gives $\|e^{\mathrm{res}}\|_{\mathcal{E}} \leq C_{\text{stab}}\big(\|\mathcal{R}_y\|_{L^2(Q)} + \|\mathcal{R}_\lambda\|_{L^2(Q)} + \|\mathcal{R}_u\|_{L^2(\Sigma)}\big) \leq C_{\text{stab}}\,\epsilon_{\text{loss}}$. Combining with $\|e^{\mathrm{approx}}\|_{\mathcal{E}}\leq \epsilon_{\text{net}}$ and the triangle inequality gives \eqref{eq:apriori_estimate}. We emphasize that this is a \emph{sketch}: a full proof requires making (A1)--(A2) precise (function spaces, trace theorems) for the specific $f$ and domain considered, which is not carried out here.
+\end{proof}
+
+\begin{remark}
+Bound \eqref{eq:apriori_estimate} uses the \emph{continuous} residual norm $\epsilon_{\text{loss}}$, not the Monte-Carlo loss $\mathcal{L}_{\text{ind}}$ that is actually minimized during training. The gap between the two is exactly $\mathcal{E}_{\text{quad}}$ in \eqref{eq:decomp}; see Section~3.6 for how it is controlled in practice.
+\end{remark}
+
+\begin{remark}
+For the Allen--Cahn nonlinearity $f(y)=y^3-y$, $f'(s)=3s^2-1\geq-1$ is bounded below, which is what makes the coercivity argument in the proof sketch available; a genuine coercivity estimate for the linearized adjoint operator additionally requires either a smallness condition on $T$ or an exponential time-weight $e^{-c_f t}$ to absorb the $-1$ reaction term, which we do not carry out in detail here.
+\end{remark}
+
+\subsection{A Posteriori Error Estimation}
+
+Because $Y_\theta, U_\psi, \Lambda_\phi$ are smooth functions on all of $\overline{Q}$ (for smooth activation functions), there is no computational mesh and no notion of an inter-element jump in the normal derivative — such jumps are identically zero for a globally differentiable network. We therefore build the a posteriori indicator directly from pointwise residual evaluation on a \emph{verification point set}, distinct from (and typically much larger/denser than) the training collocation set, rather than from a finite-element-style mesh.
+
+\subsubsection{Verification-Point Residual Indicator}
+
+Let $\widehat{Q} = \{(x_k,t_k)\}_{k=1}^{K}\subset Q$ and $\widehat{\Sigma} = \{(x_k^b,t_k^b)\}_{k=1}^{K_b}\subset \Sigma$ be dense verification point sets (e.g.\ a fixed low-discrepancy or grid sample, held out from training) with associated quadrature weights $\{\omega_k\}$, $\{\omega_k^b\}$ summing to $|Q|$ and $|\Sigma|$ respectively. Define the global a posteriori indicator
+
+\begin{equation}
+\label{eq:estimator_global}
+\eta^2 \;:=\; \sum_{k=1}^{K} \omega_k\,|\mathcal{R}_y(x_k,t_k)|^2
+\;+\; \sum_{k=1}^{K} \omega_k\,|\mathcal{R}_\lambda(x_k,t_k)|^2
+\;+\; \sum_{k=1}^{K_b} \omega_k^b\,|\mathcal{R}_u(x_k^b,t_k^b)|^2
+\;+\; \eta_{\text{ic}}^2 + \eta_T^2,
+\end{equation}
+
+where $\eta_{\text{ic}}^2$ and $\eta_T^2$ are the analogous quadrature approximations of $\|Y_\theta(\cdot,0)-y_0\|_{L^2(\Omega)}^2$ and $\|\Lambda_\phi(\cdot,T)\|_{L^2(\Omega)}^2$. By construction $\eta^2$ is a quadrature estimate of the continuous quantity $\|\mathcal{R}_y\|_{L^2(Q)}^2+\|\mathcal{R}_\lambda\|_{L^2(Q)}^2+\|\mathcal{R}_u\|_{L^2(\Sigma)}^2+\|Y_\theta(\cdot,0)-y_0\|^2+\|\Lambda_\phi(\cdot,T)\|^2$ that enters Theorem~\ref{thm:apriori}, evaluated on a point set independent of the one used for training. If desired, a \emph{local} (space-time cell) version can still be reported for visualization, $\eta^2 = \sum_{E} \eta^2(E)$ with $E$ ranging over cells of a fixed post-hoc partition of $\overline{Q}$ used only for plotting, but we stress that this partition plays no role in the estimator's derivation and no jump terms are included.
+
+\subsubsection{Reliability}
+
+\begin{theorem}[Reliability]
+\label{thm:reliability}
+Under Assumptions (A1)--(A3), and with $\eta$ as in \eqref{eq:estimator_global} computed on a sufficiently fine verification set,
+\begin{equation}
+\| (e_y, e_\lambda, e_u) \|_{\mathcal{E}} \;\lesssim\; \eta + \mathcal{E}_{\text{quad}},
+\end{equation}
+where $\mathcal{E}_{\text{quad}}$ is the (typically negligible, if $K,K_b$ are large) quadrature error of \eqref{eq:estimator_global} itself relative to the exact $L^2$ residual norms.
+\end{theorem}
+
+\begin{proof}[Sketch of proof]
+Immediate from Theorem~\ref{thm:apriori} once one identifies $\eta$ as a quadrature approximation of $\epsilon_{\text{loss}}$: apply \eqref{eq:apriori_estimate} with $\epsilon_{\text{loss}}$ replaced by $\eta + \mathcal{E}_{\text{quad}}$ and $\epsilon_{\text{net}}$ absorbed into the implicit constant (which is legitimate once the network has been trained to near-zero loss, so that $\epsilon_{\text{net}}$ is itself of the same order as $\eta$).
+\end{proof}
+
+\subsubsection{On "Efficiency" (Lower Bound)}
+
+A finite-element a posteriori estimator is typically also \emph{efficient}: $\eta(E) \lesssim \|e\|_{1,D_E}$ up to data oscillation, proved with element-wise bubble functions supported on individual mesh cells. This construction relies essentially on having a mesh with compactly supported, element-local test functions. In the present meshfree PINN setting there is no such local test-function machinery available in general, and we are not aware of a proof of a matching lower bound for collocation-based PINN residual indicators of this type. We therefore do \emph{not} claim an efficiency theorem here; \eqref{eq:estimator_global} should be understood as a reliable (upper-bounding, up to constants) indicator only, useful for monitoring convergence and flagging poorly-resolved regions of $Q$, but not as a certified two-sided estimator. Establishing efficiency rigorously in the meshfree setting is left as an open direction.
+
+\subsection{Loss Function as an Error Indicator}
+
+Combining Theorem~\ref{thm:apriori} with the identification of $\eta$ as a quadrature estimate of $\epsilon_{\text{loss}}$, we have informally
+\begin{equation}
+\| (e_y, e_\lambda, e_u) \|_{\mathcal{E}}^2 \;\lesssim\; \mathcal{L}_{\text{ind}} + \mathcal{E}_{\text{approx}} + \mathcal{E}_{\text{quad}},
+\end{equation}
+so a small training loss is \emph{necessary but not sufficient} for a small true error: it must be accompanied by (i) a sufficiently expressive architecture ($\mathcal{E}_{\text{approx}}$ small) and (ii) a sufficiently dense/well-distributed collocation set ($\mathcal{E}_{\text{quad}}$ small). In particular, a low training loss evaluated \emph{on the training points themselves} can be misleading if the network overfits those points; this is precisely why $\eta$ in Section~3.5 is evaluated on an independent verification set.
+
+\subsection{Practical Implementation of the Error Estimator}
+
+The a posteriori indicator is computed after training as follows:
+\begin{enumerate}
+    \item Sample a verification point set $\widehat{Q}\cup\widehat{\Sigma}$, independent of the training collocation points (e.g.\ a fresh random draw, or a fixed low-discrepancy grid), together with quadrature weights.
+    \item Evaluate $Y_\theta, U_\psi, \Lambda_\phi$ and their required derivatives at these points via automatic differentiation, and compute the residuals $\mathcal{R}_y, \mathcal{R}_\lambda, \mathcal{R}_u$.
+    \item Form the weighted sum \eqref{eq:estimator_global}.
+    \item (Optional, diagnostic only) Bin the pointwise squared residuals over a post-hoc space-time partition purely for visualization of where the error is concentrated; this partition does not enter the estimator's value.
+\end{enumerate}
+The computational cost is comparable to one evaluation of the loss function on $K+K_b$ points, i.e.\ negligible relative to training.
+
+\subsection{Numerical Validation Strategy}
+
+To validate the error indicator, we propose the following procedure:
+\begin{enumerate}
+    \item Construct a reference solution $(y_{\text{ref}}, u_{\text{ref}}, \lambda_{\text{ref}})$ with a fine-grid FEM/adjoint solver.
+    \item Train the Indirect PINN with an increasing number of training collocation points $N = N_{\text{int}} = N_{\text{bc}}$ (there is no mesh size $h$ in the meshfree setting; $N$ plays the analogous role).
+    \item Compute the true error $\|e\|_{\mathcal{E}}$ against the reference solution.
+    \item Compute the indicator $\eta$ from \eqref{eq:estimator_global} on a verification set independent of both the $N$ training points and the reference-solution grid.
+    \item Compare $\eta$ with the true error as $N$ increases, and report the empirical ratio $\eta/\|e\|_{\mathcal{E}}$ (an \emph{effectivity index}) rather than assuming a fixed algebraic rate; unlike FEM, PINN convergence in $N$ is not generally guaranteed to follow a clean power law, and any observed rate should be reported empirically rather than asserted a priori.
+\end{enumerate}
+This validates the reliability of the estimator in the sense of Theorem~\ref{thm:reliability}; it does not, and is not intended to, validate an efficiency claim (see Section~3.5.3).
+
+\subsection{Summary of the Error Estimation Framework}
+
+The proposed error estimation framework provides:
+\begin{itemize}
+    \item \textbf{A conditional a priori bound} (Theorem~\ref{thm:apriori}), valid under explicit well-posedness, regularity, and approximation-capacity assumptions (A1)--(A4).
+    \item \textbf{A computable a posteriori indicator} \eqref{eq:estimator_global}, built from pointwise residual evaluation on a verification set, with no artificial mesh-jump terms.
+    \item \textbf{A reliability theorem} (upper bound), together with an honest statement that a matching efficiency (lower bound) result is not established here for the meshfree setting.
+    \item \textbf{Practical guidelines} for computing and validating the indicator empirically.
+\end{itemize}
+
+\begin{remark}
+The Dirichlet boundary control setting analyzed here (Assumption (A2)) is a known source of low-regularity difficulties for the classical PDE theory; results here should not be read as removing that difficulty, only as working under regularity hypotheses strong enough to bypass it. Extending the framework to genuinely low-regularity Dirichlet data, and to a provably efficient meshfree a posteriori indicator, are left for future work.
+\end{remark}

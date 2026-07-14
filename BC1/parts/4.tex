@@ -1,0 +1,98 @@
+\section{Numerical Experiment Setup}
+
+\subsection{Test Problem}
+\label{subsec:test_problem}
+
+To verify and compare the two PINN formulations presented in Section~2, we construct a test problem based on the \emph{method of manufactured solutions}, which allows the error to be computed against a known exact solution.
+
+We consider the case $d=1$, $\Omega = (0,1)$, $T=1$, and set the diffusion coefficient to $\nu = 0.1$. For the initial verification, the nonlinear term is chosen as $f(y) = y^3$.
+
+We prescribe a reference state and control (the manufactured exact solution) as follows:
+\begin{equation}
+\label{eq:manufactured_y}
+y^*(x,t) = \sin(\pi x)\, e^{-t},
+\end{equation}
+\begin{equation}
+\label{eq:manufactured_u}
+u^*(x,t) = y^*(x,t)\big|_{x\in\partial\Omega} = 0, \quad \forall t \in (0,T),
+\end{equation}
+since $\sin(\pi x) = 0$ at $x=0$ and $x=1$. The corresponding initial condition follows directly:
+\begin{equation}
+y_0(x) = y^*(x,0) = \sin(\pi x).
+\end{equation}
+
+Since the state equation \eqref{eq:state} contains no source term, the function $y^*$ above does not, in general, exactly satisfy the equation with $f(y)=y^3$. We therefore add an artificial source term $g(x,t)$ to the right-hand side of the state equation, obtained by substituting $y^*$ directly into the equation:
+\begin{equation}
+\label{eq:manufactured_source}
+g(x,t) := \partial_t y^* - \nu \Delta y^* + f(y^*).
+\end{equation}
+With this source term, $y^*$ is the exact solution of the augmented state equation. The desired trajectory $y_d$ in the cost functional \eqref{eq:cost} is chosen to coincide with $y^*$, i.e., $y_d \equiv y^*$, so that $(y^*, u^*)$ is exactly the optimal solution of the control problem, with optimal cost value $J^* = 0$.
+
+\subsection{Neural Network Configuration}
+\label{subsec:network_setup}
+
+Both formulations (direct and indirect) use fully-connected feedforward neural networks with $\tanh$ activation, taking $(x,t)$ as input and producing the corresponding scalar output.
+
+\begin{table}[h!]
+\centering
+\caption{Neural network architectures used in the experiments.}
+\label{tab:architecture}
+\begin{tabular}{lccc}
+\hline
+Network & Hidden layers & Neurons/layer & Activation \\
+\hline
+$Y_\theta$ (state) & 4 & 50 & $\tanh$ \\
+$U_\psi$ (control) & 3 & 30 & $\tanh$ \\
+$\Lambda_\phi$ (adjoint, indirect method only) & 4 & 50 & $\tanh$ \\
+\hline
+\end{tabular}
+\end{table}
+
+For the indirect formulation, the distance function $d(x)$ used in the hard-constraint construction \eqref{eq:hard_constraint} is chosen as
+\begin{equation}
+d(x) = x(1-x),
+\end{equation}
+which satisfies $d(x) = 0$ for $x \in \{0,1\} = \partial\Omega$ and $d(x) > 0$ for $x \in (0,1)$.
+
+Network weights are initialized using Xavier (Glorot uniform) initialization.
+
+\subsection{Collocation Points and Sampling Strategy}
+
+Training points are sampled using Latin Hypercube Sampling (LHS) over the corresponding domains:
+\begin{itemize}
+    \item $N_{\text{int}} = 10\,000$ interior points in $Q = (0,1)\times(0,1)$;
+    \item $N_{\text{bc}} = 2\,000$ boundary points on $\Sigma = \{0,1\}\times(0,1)$;
+    \item $N_{\text{ic}} = 500$ points for the initial condition at $t=0$;
+    \item $N_T = 500$ points for the terminal condition at $t=T$ (used only in the indirect method, for the condition $\lambda(x,T)=0$).
+\end{itemize}
+These points are resampled every $500$ epochs to reduce overfitting to a fixed set of collocation points.
+
+\subsection{Training Parameters}
+
+Training is carried out in two stages:
+\begin{enumerate}
+    \item \textbf{Stage 1}: optimization with the Adam algorithm, initial learning rate $10^{-3}$, decayed exponentially (decay factor $0.9$ every $1\,000$ epochs), run for $20\,000$ epochs.
+    \item \textbf{Stage 2}: fine-tuning with the L-BFGS algorithm until convergence or a maximum of $5\,000$ iterations, to improve accuracy once Adam has brought the solution near a minimum.
+\end{enumerate}
+
+Table~\ref{tab:hyperparams} summarizes the loss weights used for each method.
+
+\begin{table}[h!]
+\centering
+\caption{Loss term weights for each formulation.}
+\label{tab:hyperparams}
+\begin{tabular}{lcc}
+\hline
+Term & Direct PINN & Indirect PINN \\
+\hline
+$w_{\text{res}}$ (state PDE residual) & $1$ & $1$ \\
+$w_{\text{bc}}$ (state boundary condition, soft) & $10$ & --- (hard-constrained) \\
+$w_{\text{ic}}$ (initial condition) & $10$ & $10$ \\
+$w_\lambda$ (adjoint PDE residual) & --- & $1$ \\
+$w_{\text{st}}$ (stationarity condition) & --- & $1$ \\
+$w_T$ (adjoint terminal condition) & --- & $10$ \\
+\hline
+\end{tabular}
+\end{table}
+
+The Tikhonov regularization parameter is fixed at $\alpha = 10^{-2}$ throughout all experiments. Each configuration is trained over $5$ independent runs with different random seeds to assess the stability of the results.

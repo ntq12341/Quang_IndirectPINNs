@@ -1,0 +1,26 @@
+\section{Problem formulation}
+
+Let $\Omega \subset \mathbb{R}^d$ ($d=1,2$) be a bounded domain with sufficiently smooth boundary $\partial\Omega$, and let $T>0$ be a fixed final time. We denote the space-time domain by $Q := \Omega \times (0,T)$ and the time-dependent boundary by $\Sigma := \partial\Omega \times (0,T)$.
+
+We consider the following optimal control problem: find the state $y: Q \to \mathbb{R}$ and the boundary control $u: \Sigma \to \mathbb{R}$ that minimize the tracking-type cost functional
+
+\begin{equation}
+\label{eq:cost}
+J(y,u) = \int_0^T \int_\Omega |y(x,t) - y_d(x,t)|^2 \, dx\,dt
+          + \frac{\alpha}{2} \int_0^T \int_{\partial\Omega} |u(x,t)|^2 \, ds\,dt,
+\end{equation}
+
+subject to the semilinear parabolic state equation
+
+\begin{equation}
+\label{eq:state}
+\begin{cases}
+\partial_t y - \nu \Delta y + f(y) = 0, & \text{in } Q, \\[4pt]
+y(x,t) = u(x,t), & \text{on } \Sigma, \\[4pt]
+y(x,0) = y_0(x), & \text{in } \Omega,
+\end{cases}
+\end{equation}
+
+where $\nu>0$ is the diffusion coefficient, $y_d \in L^2(Q)$ is a given desired trajectory, and $\alpha > 0$ is fixed regularization parameter. 
+The boundary condition in \eqref{eq:state} is of Dirichlet type, meaning that the control acts directly on the boundary value of the state.
+

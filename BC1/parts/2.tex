@@ -1,0 +1,126 @@
+\section{Methodology}
+
+In this section, we present two Physics-Informed Neural Network (PINN) formulations for solving the optimal control problem stated in Section~1. 
+The first is a \emph{direct} approach, which treats the constrained optimization problem as a penalized loss minimization. 
+The second is an \emph{indirect} approach, which enforces the first-order optimality system directly. 
+Both formulations use neural networks to parameterize the unknown functions; however, the indirect formulation additionally incorporates a hard-constraint strategy to exactly impose the Dirichlet boundary condition.
+
+\subsection{Direct PINN Formulation}
+
+The direct PINN method approximates the state $y(x,t)$ and the control $u(x,t)$ by two independent neural networks:
+\begin{equation}
+y(x,t) \approx Y_{\theta}(x,t), \qquad u(x,t) \approx U_{\psi}(x,t),
+\end{equation}
+where $\theta$ and $\psi$ denote the trainable parameters of the respective networks. 
+The networks are trained by minimizing a composite loss function that includes the PDE residual, the boundary/initial conditions, and the cost functional (as soft penalties). 
+
+Define the PDE residual for the state equation:
+\begin{equation}
+r_y(x,t;\theta,\psi) := \partial_t Y_{\theta} - \nu \Delta Y_{\theta} + f(Y_{\theta}).
+\end{equation}
+Note that for the Dirichlet boundary control, the control $u$ does not appear inside the PDE (unlike distributed control); it enters only through the boundary condition $Y_{\theta} = U_{\psi}$ on $\Sigma$.
+
+The direct PINN loss is then constructed as:
+\begin{equation}
+\label{eq:direct_loss}
+\begin{aligned}
+\mathcal{L}_{\text{dir}}(\theta,\psi) = &\; w_{\text{res}} \mathcal{L}_{\text{res}}^y 
++ w_{\text{bc}} \mathcal{L}_{\text{bc}}^y 
++ w_{\text{ic}} \mathcal{L}_{\text{ic}}^y \\
+&+ \mathcal{L}_{\text{track}} 
++ \frac{\alpha}{2} \mathcal{L}_{\text{reg}},
+\end{aligned}
+\end{equation}
+where the individual loss terms are defined as follows, using Monte Carlo approximations over collocation points:
+\begin{align}
+\mathcal{L}_{\text{res}}^y &:= \frac{1}{N_{\text{int}}} \sum_{j=1}^{N_{\text{int}}} \left| r_y(x_j,t_j;\theta,\psi) \right|^2, \\
+\mathcal{L}_{\text{bc}}^y &:= \frac{1}{N_{\text{bc}}} \sum_{j=1}^{N_{\text{bc}}} \left| Y_{\theta}(x_j^b,t_j^b) - U_{\psi}(x_j^b,t_j^b) \right|^2, \\
+\mathcal{L}_{\text{ic}}^y &:= \frac{1}{N_{\text{ic}}} \sum_{i=1}^{N_{\text{ic}}} \left| Y_{\theta}(x_i,0) - y_0(x_i) \right|^2, \\
+\mathcal{L}_{\text{track}} &:= \frac{1}{N_{\text{int}}} \sum_{j=1}^{N_{\text{int}}} \left| Y_{\theta}(x_j,t_j) - y_d(x_j,t_j) \right|^2, \\
+\mathcal{L}_{\text{reg}} &:= \frac{1}{N_{\text{bc}}} \sum_{j=1}^{N_{\text{bc}}} \left| U_{\psi}(x_j^b,t_j^b) \right|^2.
+\end{align}
+
+Here, $\{(x_j,t_j)\}_{j=1}^{N_{\text{int}}}$ are interior collocation points in $Q$, $\{(x_j^b,t_j^b)\}_{j=1}^{N_{\text{bc}}}$ are boundary collocation points on $\Sigma$, and $\{x_i\}_{i=1}^{N_{\text{ic}}}$ are points in $\Omega$ for the initial condition. The weights $w_{\text{res}}, w_{\text{bc}}, w_{\text{ic}} > 0$ balance the different loss components. The tracking term $\mathcal{L}_{\text{track}}$ approximates the first term of the cost functional, while $\mathcal{L}_{\text{reg}}$ approximates the control cost.
+
+This formulation is conceptually simple and does not require the adjoint variable. 
+However, as shown in recent studies~\cite{zhang2026pinns}, the soft penalty on the boundary condition may lead to inaccurate satisfaction of the constraint, and the loss balance can be delicate.
+
+\subsection{Indirect PINN Formulation with Hard Constraint}
+
+The indirect approach exploits the first-order optimality system derived from the Lagrangian. For the Dirichlet boundary control problem, the optimality system consists of the state equation, the adjoint equation, and the stationarity condition. We now detail the neural network parameterization and the hard-constraint mechanism for the Dirichlet boundary condition.
+
+\subsubsection{Optimality System}
+
+The Lagrangian for the problem is:
+\begin{equation}
+\mathcal{L}(y,u,\lambda) = J(y,u) + \int_0^T \int_\Omega \lambda \left( \partial_t y - \nu \Delta y + f(y) \right) dx\,dt,
+\end{equation}
+where $\lambda$ is the adjoint variable. Taking variations with respect to $y$, $u$, and $\lambda$, we obtain the following system:
+
+\begin{align}
+\partial_t y - \nu \Delta y + f(y) &= 0, \quad &&\text{in } Q, \label{eq:state_opt}\\
+-\partial_t \lambda - \nu \Delta \lambda + f'(y) \lambda &= - (y - y_d), \quad &&\text{in } Q, \label{eq:adjoint}\\
+\alpha u - \partial_n \lambda &= 0, \quad &&\text{on } \Sigma, \label{eq:stationarity}\\
+y &= u, \quad &&\text{on } \Sigma, \label{eq:bc_y}\\
+\lambda &= 0, \quad &&\text{on } \Sigma, \label{eq:bc_lambda}\\
+y(x,0) &= y_0(x), \quad &&\text{in } \Omega, \\
+\lambda(x,T) &= 0, \quad &&\text{in } \Omega.
+\end{align}
+
+The condition \eqref{eq:stationarity} is the stationarity condition for the Dirichlet case, linking the normal derivative of $\lambda$ on the boundary to the control $u$.
+
+\subsubsection{Neural Network Parameterization}
+
+We introduce three neural networks:
+\begin{equation}
+y \approx Y_{\theta}(x,t), \qquad u \approx U_{\psi}(x,t), \qquad \lambda \approx \Lambda_{\phi}(x,t),
+\end{equation}
+where $\theta, \psi, \phi$ are the parameters. Instead of treating the boundary condition $y = u$ as a soft penalty, we enforce it \emph{exactly} via a hard-constraint construction.
+
+\subsubsection{Hard-Constraint for Dirichlet Boundary Condition}
+
+Let $d(x)$ be a smooth function such that:
+\begin{itemize}
+    \item $d(x) = 0$ for $x \in \partial\Omega$,
+    \item $d(x) > 0$ for $x \in \Omega$.
+\end{itemize}
+For simple domains like a rectangle, $d(x)$ can be chosen as the distance to the boundary, e.g., for $\Omega = [0,1]$, $d(x) = x(1-x)$. Then we construct the trial function for the state as:
+\begin{equation}
+Y_{\theta}(x,t) = U_{\psi}(x,t) + d(x) \cdot N_{\theta}(x,t),
+\end{equation}
+where $N_{\theta}(x,t)$ is an additional neural network (or can be merged into $Y_{\theta}$ by modifying the architecture). On the boundary, $d=0$, we have $Y_{\theta} = U_{\psi}$, so the Dirichlet boundary condition is satisfied exactly, regardless of the network parameters.
+
+We further impose the adjoint boundary condition $\lambda = 0$ on $\Sigma$ via a similar construction, or we can enforce it softly. Since the adjoint boundary condition is homogeneous Dirichlet, we can define:
+\begin{equation}
+\Lambda_{\phi}(x,t) = d(x) \cdot M_{\phi}(x,t),
+\end{equation}
+where $M_{\phi}$ is another neural network. This ensures $\Lambda_{\phi}=0$ on $\partial\Omega$ exactly.
+
+\subsubsection{Indirect PINN Loss}
+
+With the hard constraints, the loss function for the indirect method contains only the residual errors of the state equation, the adjoint equation, the stationarity condition, and the initial/terminal conditions. The boundary conditions are already satisfied by construction, so no boundary loss terms are needed. The loss is:
+
+\begin{equation}
+\label{eq:indirect_loss}
+\begin{aligned}
+\mathcal{L}_{\text{ind}}(\theta,\psi,\phi) = &\; w_y \mathcal{L}_{\text{res}}^y 
++ w_\lambda \mathcal{L}_{\text{res}}^\lambda 
++ w_{\text{st}} \mathcal{L}_{\text{st}} \\
+&+ w_{\text{ic}} \mathcal{L}_{\text{ic}}^y 
++ w_T \mathcal{L}_T^\lambda,
+\end{aligned}
+\end{equation}
+
+where the residual terms are defined as follows:
+
+\begin{align}
+\mathcal{L}_{\text{res}}^y &:= \frac{1}{N_{\text{int}}} \sum_{j=1}^{N_{\text{int}}} \left| \partial_t Y_{\theta} - \nu \Delta Y_{\theta} + f(Y_{\theta}) \right|_{(x_j,t_j)}^2, \\
+\mathcal{L}_{\text{res}}^\lambda &:= \frac{1}{N_{\text{int}}} \sum_{j=1}^{N_{\text{int}}} \left| -\partial_t \Lambda_{\phi} - \nu \Delta \Lambda_{\phi} + f'(Y_{\theta}) \Lambda_{\phi} + (Y_{\theta} - y_d) \right|_{(x_j,t_j)}^2, \\
+\mathcal{L}_{\text{st}} &:= \frac{1}{N_{\text{bc}}} \sum_{j=1}^{N_{\text{bc}}} \left| \alpha U_{\psi}(x_j^b,t_j^b) - \partial_n \Lambda_{\phi}(x_j^b,t_j^b) \right|^2, \\
+\mathcal{L}_{\text{ic}}^y &:= \frac{1}{N_{\text{ic}}} \sum_{i=1}^{N_{\text{ic}}} \left| Y_{\theta}(x_i,0) - y_0(x_i) \right|^2, \\
+\mathcal{L}_T^\lambda &:= \frac{1}{N_T} \sum_{i=1}^{N_T} \left| \Lambda_{\phi}(x_i,T) \right|^2.
+\end{align}
+
+Here, $\partial_n \Lambda_{\phi}$ is computed via automatic differentiation. The stationarity loss $\mathcal{L}_{\text{st}}$ enforces the condition $\alpha u = \partial_n \lambda$ on the boundary. The terminal condition for the adjoint is $\lambda(x,T)=0$.
+
+Compared to the direct formulation, the indirect loss is more structured: minimizing it drives the neural networks toward a solution of the optimality system, which is precisely the KKT point of the original problem. In particular, because the boundary conditions are hard-constrained, there is no trade-off between satisfying the PDE and satisfying the boundary conditions; the optimizer focuses solely on the residuals.
