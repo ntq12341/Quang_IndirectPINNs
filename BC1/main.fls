@@ -1,6 +1,6 @@
-PWD d:\4Silic\optimal control(1)\code\BC1
+PWD D:\4Silic\optimal control(1)\code\BC1
 INPUT C:\Users\Admin\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
-INPUT d:\4Silic\optimal control(1)\code\BC1\main.tex
+INPUT main.tex
 OUTPUT main.log
 INPUT C:\Program Files\MiKTeX\tex\latex\base\article.cls
 INPUT C:\Program Files\MiKTeX\tex\latex\base\article.cls
@@ -70,12 +70,6 @@ INPUT C:\Program Files\MiKTeX\tex\latex\tools\tabularx.sty
 INPUT C:\Program Files\MiKTeX\tex\latex\tools\tabularx.sty
 INPUT C:\Program Files\MiKTeX\tex\latex\tools\array.sty
 INPUT C:\Program Files\MiKTeX\tex\latex\tools\array.sty
-INPUT C:\Users\Admin\AppData\Roaming\MiKTeX\tex\latex\caption\subcaption.sty
-INPUT C:\Users\Admin\AppData\Roaming\MiKTeX\tex\latex\caption\subcaption.sty
-INPUT C:\Users\Admin\AppData\Roaming\MiKTeX\tex\latex\caption\caption.sty
-INPUT C:\Users\Admin\AppData\Roaming\MiKTeX\tex\latex\caption\caption.sty
-INPUT C:\Users\Admin\AppData\Roaming\MiKTeX\tex\latex\caption\caption3.sty
-INPUT C:\Users\Admin\AppData\Roaming\MiKTeX\tex\latex\caption\caption3.sty
 INPUT C:\Users\Admin\AppData\Roaming\MiKTeX\tex\latex\geometry\geometry.sty
 INPUT C:\Users\Admin\AppData\Roaming\MiKTeX\tex\latex\geometry\geometry.sty
 INPUT C:\Program Files\MiKTeX\tex\generic\iftex\ifvtex.sty
@@ -87,8 +81,6 @@ INPUT C:\Users\Admin\AppData\Roaming\MiKTeX\tex\latex\geometry\geometry.cfg
 INPUT C:\Users\Admin\AppData\Roaming\MiKTeX\tex\latex\geometry\geometry.cfg
 INPUT C:\Users\Admin\AppData\Roaming\MiKTeX\tex\latex\preprint\authblk.sty
 INPUT C:\Users\Admin\AppData\Roaming\MiKTeX\tex\latex\preprint\authblk.sty
-INPUT C:\Users\Admin\AppData\Roaming\MiKTeX\tex\latex\cite\cite.sty
-INPUT C:\Users\Admin\AppData\Roaming\MiKTeX\tex\latex\cite\cite.sty
 INPUT C:\Users\Admin\AppData\Roaming\MiKTeX\tex\latex\natbib\natbib.sty
 INPUT C:\Users\Admin\AppData\Roaming\MiKTeX\tex\latex\natbib\natbib.sty
 INPUT C:\Program Files\MiKTeX\tex\latex\hyperref\hyperref.sty
@@ -196,19 +188,103 @@ INPUT C:\Users\Admin\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnr5.tfm
 INPUT .\parts\2.tex
 INPUT .\parts\2.tex
 INPUT parts\2.tex
-INPUT C:\Users\Admin\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnti10.tfm
 INPUT C:\Users\Admin\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnbx12.tfm
 INPUT C:\Users\Admin\AppData\Local\MiKTeX\fonts\map\pdftex\pdftex.map
 INPUT C:\Users\Admin\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnbx10.tfm
-INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\tcrm1000.tfm
 INPUT .\parts\3.tex
 INPUT .\parts\3.tex
 INPUT parts\3.tex
+INPUT C:\Users\Admin\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnti10.tfm
+INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\tcrm1000.tfm
 INPUT C:\Users\Admin\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnti7.tfm
 INPUT C:\Users\Admin\AppData\Roaming\MiKTeX\fonts\tfm\vntex\vnr\vnti7.tfm
 INPUT .\parts\4.tex
 INPUT .\parts\4.tex
 INPUT parts\4.tex
+INPUT .\figures\ex1\state_comparison.png
+INPUT .\figures\ex1\state_comparison.png
+INPUT .\figures\ex1\state_comparison.png
+INPUT .\figures\ex1\state_comparison.png
+INPUT .\figures\ex1\state_comparison.png
+INPUT .\figures\ex1\state_comparison.png
+INPUT .\figures\ex1\state_comparison.png
+INPUT .\figures\ex1\control_comparison.png
+INPUT .\figures\ex1\control_comparison.png
+INPUT .\figures\ex1\control_comparison.png
+INPUT .\figures\ex1\control_comparison.png
+INPUT .\figures\ex1\control_comparison.png
+INPUT .\figures\ex1\control_comparison.png
+INPUT .\figures\ex1\control_comparison.png
+INPUT .\figures\ex1\metric_comparison.png
+INPUT .\figures\ex1\metric_comparison.png
+INPUT .\figures\ex1\metric_comparison.png
+INPUT .\figures\ex1\metric_comparison.png
+INPUT .\figures\ex1\metric_comparison.png
+INPUT .\figures\ex1\metric_comparison.png
+INPUT .\figures\ex1\metric_comparison.png
+INPUT .\figures\ex1\indirect_adjoint.png
+INPUT .\figures\ex1\indirect_adjoint.png
+INPUT .\figures\ex1\indirect_adjoint.png
+INPUT .\figures\ex1\indirect_adjoint.png
+INPUT .\figures\ex1\indirect_adjoint.png
+INPUT .\figures\ex1\indirect_adjoint.png
+INPUT .\figures\ex1\indirect_adjoint.png
+INPUT .\figures\ex1\residual_maps.png
+INPUT .\figures\ex1\residual_maps.png
+INPUT .\figures\ex1\residual_maps.png
+INPUT .\figures\ex1\residual_maps.png
+INPUT .\figures\ex1\residual_maps.png
+INPUT .\figures\ex1\residual_maps.png
+INPUT .\figures\ex1\residual_maps.png
+INPUT .\figures\ex1\stationarity_residual.png
+INPUT .\figures\ex1\stationarity_residual.png
+INPUT .\figures\ex1\stationarity_residual.png
+INPUT .\figures\ex1\stationarity_residual.png
+INPUT .\figures\ex1\stationarity_residual.png
+INPUT .\figures\ex1\stationarity_residual.png
+INPUT .\figures\ex1\stationarity_residual.png
+INPUT .\figures\ex2\state_comparison.png
+INPUT .\figures\ex2\state_comparison.png
+INPUT .\figures\ex2\state_comparison.png
+INPUT .\figures\ex2\state_comparison.png
+INPUT .\figures\ex2\state_comparison.png
+INPUT .\figures\ex2\state_comparison.png
+INPUT .\figures\ex2\state_comparison.png
+INPUT .\figures\ex2\control_comparison.png
+INPUT .\figures\ex2\control_comparison.png
+INPUT .\figures\ex2\control_comparison.png
+INPUT .\figures\ex2\control_comparison.png
+INPUT .\figures\ex2\control_comparison.png
+INPUT .\figures\ex2\control_comparison.png
+INPUT .\figures\ex2\control_comparison.png
+INPUT .\figures\ex2\indirect_adjoint.png
+INPUT .\figures\ex2\indirect_adjoint.png
+INPUT .\figures\ex2\indirect_adjoint.png
+INPUT .\figures\ex2\indirect_adjoint.png
+INPUT .\figures\ex2\indirect_adjoint.png
+INPUT .\figures\ex2\indirect_adjoint.png
+INPUT .\figures\ex2\indirect_adjoint.png
+INPUT .\figures\ex2\metric_comparison.png
+INPUT .\figures\ex2\metric_comparison.png
+INPUT .\figures\ex2\metric_comparison.png
+INPUT .\figures\ex2\metric_comparison.png
+INPUT .\figures\ex2\metric_comparison.png
+INPUT .\figures\ex2\metric_comparison.png
+INPUT .\figures\ex2\metric_comparison.png
+INPUT .\figures\ex2\residual_maps.png
+INPUT .\figures\ex2\residual_maps.png
+INPUT .\figures\ex2\residual_maps.png
+INPUT .\figures\ex2\residual_maps.png
+INPUT .\figures\ex2\residual_maps.png
+INPUT .\figures\ex2\residual_maps.png
+INPUT .\figures\ex2\residual_maps.png
+INPUT .\figures\ex2\stationarity_residual.png
+INPUT .\figures\ex2\stationarity_residual.png
+INPUT .\figures\ex2\stationarity_residual.png
+INPUT .\figures\ex2\stationarity_residual.png
+INPUT .\figures\ex2\stationarity_residual.png
+INPUT .\figures\ex2\stationarity_residual.png
+INPUT .\figures\ex2\stationarity_residual.png
 INPUT .\parts\5.tex
 INPUT .\parts\5.tex
 INPUT parts\5.tex

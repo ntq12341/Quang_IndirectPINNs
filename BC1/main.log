@@ -1,10 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.4.22)  14 JUL 2026 19:25
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.4.22)  15 JUL 2026 00:44
 entering extended mode
  restricted \write18 enabled.
- file:line:error style messages enabled.
  %&-line parsing enabled.
-**"d:/4Silic/optimal control(1)/code/BC1/main.tex"
-(d:/4Silic/optimal control(1)/code/BC1/main.tex
+**./main.tex
+(main.tex
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
 (C:\Program Files\MiKTeX\tex/latex/base\article.cls
@@ -23,17 +22,22 @@ File: size10.clo 2025/01/22 v1.4n Standard LaTeX file (size option)
 \abovecaptionskip=\skip49
 \belowcaptionskip=\skip50
 \bibindent=\dimen148
-) (C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/vntex\vietnam.sty
+)
+(C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/vntex\vietnam.sty
 Package: vietnam 2009/07/12 v1.3 support for Vietnamese
- (C:\Program Files\MiKTeX\tex/latex/base\ifthen.sty
+
+(C:\Program Files\MiKTeX\tex/latex/base\ifthen.sty
 Package: ifthen 2024/03/16 v1.1e Standard LaTeX ifthen package (DPC)
-) (C:\Program Files\MiKTeX\tex/latex/base\fontenc.sty
+)
+(C:\Program Files\MiKTeX\tex/latex/base\fontenc.sty
 Package: fontenc 2025/07/18 v2.1d Standard LaTeX package
- (C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/vntex\t5enc.def
+
+(C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/vntex\t5enc.def
 File: t5enc.def 2006/11/21 v1.4 Vietnamese T5 encoding
 Now handling font encoding T5 ...
 ... processing UTF-8 mapping file for font encoding T5
- (C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/vntex\t5enc.dfu
+
+(C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/vntex\t5enc.dfu
 File: t5enc.dfu 2006/08/19 v1.1 UTF8 support for Vietnamese
    defining Unicode char U+00AB (decimal 171)
    defining Unicode char U+00BB (decimal 187)
@@ -187,16 +191,21 @@ File: t5enc.dfu 2006/08/19 v1.1 UTF8 support for Vietnamese
    defining Unicode char U+203A (decimal 8250)
    defining Unicode char U+2423 (decimal 9251)
 ))
-LaTeX Font Info:    Trying to load font information for T5+cmr on input line 116.
- (C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/vntex\t5cmr.fd
+LaTeX Font Info:    Trying to load font information for T5+cmr on input line 11
+6.
+
+(C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/vntex\t5cmr.fd
 File: t5cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
-)) (C:\Program Files\MiKTeX\tex/latex/base\inputenc.sty
+))
+(C:\Program Files\MiKTeX\tex/latex/base\inputenc.sty
 Package: inputenc 2024/02/08 v1.3d Input encoding file
 \inpenc@prehook=\toks17
 \inpenc@posthook=\toks18
-) (C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/vntex\vncaps.tex
+)
+(C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/vntex\vncaps.tex
 File: vncaps.tex 2006/06/07 v1.1 Captions in Vietnamese
-)) (C:\Program Files\MiKTeX\tex/latex/amsfonts\amsfonts.sty
+))
+(C:\Program Files\MiKTeX\tex/latex/amsfonts\amsfonts.sty
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 \@emptytoks=\toks19
 \symAMSa=\mathgroup4
@@ -204,21 +213,25 @@ Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
-) (C:\Program Files\MiKTeX\tex/latex/amsmath\amsmath.sty
+)
+(C:\Program Files\MiKTeX\tex/latex/amsmath\amsmath.sty
 Package: amsmath 2025/07/09 v2.17z AMS math features
 \@mathmargin=\skip51
 
 For additional information on amsmath, use the `?' option.
 (C:\Program Files\MiKTeX\tex/latex/amsmath\amstext.sty
 Package: amstext 2024/11/17 v2.01 AMS text
- (C:\Program Files\MiKTeX\tex/latex/amsmath\amsgen.sty
+
+(C:\Program Files\MiKTeX\tex/latex/amsmath\amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
 \@emptytoks=\toks20
 \ex@=\dimen149
-)) (C:\Program Files\MiKTeX\tex/latex/amsmath\amsbsy.sty
+))
+(C:\Program Files\MiKTeX\tex/latex/amsmath\amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 \pmbraise@=\dimen150
-) (C:\Program Files\MiKTeX\tex/latex/amsmath\amsopn.sty
+)
+(C:\Program Files\MiKTeX\tex/latex/amsmath\amsopn.sty
 Package: amsopn 2022/04/08 v2.04 operator names
 )
 \inf@bad=\count283
@@ -268,7 +281,8 @@ LaTeX Info: Redefining \Relbar on input line 970.
 \mathdisplay@stack=\toks24
 LaTeX Info: Redefining \[ on input line 2950.
 LaTeX Info: Redefining \] on input line 2951.
-) (C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/amscls\amsthm.sty
+)
+(C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/amscls\amsthm.sty
 Package: amsthm 2020/05/29 v2.20.6
 \thm@style=\toks25
 \thm@bodyfont=\toks26
@@ -282,34 +296,43 @@ Package: amsthm 2020/05/29 v2.20.6
 )
 \c@problem=\count295
 \c@remark=\count296
- (C:\Program Files\MiKTeX\tex/latex/amsfonts\amssymb.sty
+
+(C:\Program Files\MiKTeX\tex/latex/amsfonts\amssymb.sty
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
-) (C:\Program Files\MiKTeX\tex/latex/graphics\graphicx.sty
+)
+(C:\Program Files\MiKTeX\tex/latex/graphics\graphicx.sty
 Package: graphicx 2024/12/31 v1.2e Enhanced LaTeX Graphics (DPC,SPQR)
- (C:\Program Files\MiKTeX\tex/latex/graphics\keyval.sty
+
+(C:\Program Files\MiKTeX\tex/latex/graphics\keyval.sty
 Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
 \KV@toks@=\toks31
-) (C:\Program Files\MiKTeX\tex/latex/graphics\graphics.sty
+)
+(C:\Program Files\MiKTeX\tex/latex/graphics\graphics.sty
 Package: graphics 2024/08/06 v1.4g Standard LaTeX Graphics (DPC,SPQR)
- (C:\Program Files\MiKTeX\tex/latex/graphics\trig.sty
+
+(C:\Program Files\MiKTeX\tex/latex/graphics\trig.sty
 Package: trig 2023/12/02 v1.11 sin cos tan (DPC)
-) (C:\Program Files\MiKTeX\tex/latex/graphics-cfg\graphics.cfg
+)
+(C:\Program Files\MiKTeX\tex/latex/graphics-cfg\graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 106.
- (C:\Program Files\MiKTeX\tex/latex/graphics-def\pdftex.def
+
+(C:\Program Files\MiKTeX\tex/latex/graphics-def\pdftex.def
 File: pdftex.def 2025/09/29 v1.2d Graphics/color driver for pdftex
 ))
 \Gin@req@height=\dimen158
 \Gin@req@width=\dimen159
-) (C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/float\float.sty
+)
+(C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/float\float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \c@float@type=\count297
 \float@exts=\toks32
 \float@box=\box55
 \@float@everytoks=\toks33
 \@floatcapt=\box56
-) (C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/booktabs\booktabs.sty
+)
+(C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/booktabs\booktabs.sty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \heavyrulewidth=\dimen160
 \lightrulewidth=\dimen161
@@ -328,7 +351,8 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \@thisruleclass=\count300
 \@lastruleclass=\count301
 \@thisrulewidth=\dimen172
-) (C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/fancybox\fancybox.sty
+)
+(C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/fancybox\fancybox.sty
 Package: fancybox 2010/05/15 1.4
 
 Style option: `fancybox' v1.4 <2010/05/15> (tvz)
@@ -343,6 +367,7 @@ Style option: `fancybox' v1.4 <2010/05/15> (tvz)
 \Verbatim@Infile=\read2
 ) (C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/fancyhdr\fancyhdr.sty
 Package: fancyhdr 2025/02/07 v5.2 Extensive control of page headers and footers
+
 \f@nch@headwidth=\skip57
 \f@nch@offset@elh=\skip58
 \f@nch@offset@erh=\skip59
@@ -358,9 +383,11 @@ Package: fancyhdr 2025/02/07 v5.2 Extensive control of page headers and footers
 \f@nch@widthC=\skip69
 \f@nch@widthR=\skip70
 \@temptokenb=\toks38
-) (C:\Program Files\MiKTeX\tex/latex/tools\tabularx.sty
+)
+(C:\Program Files\MiKTeX\tex/latex/tools\tabularx.sty
 Package: tabularx 2023/12/11 v2.12a `tabularx' package (DPC)
- (C:\Program Files\MiKTeX\tex/latex/tools\array.sty
+
+(C:\Program Files\MiKTeX\tex/latex/tools\array.sty
 Package: array 2025/09/25 v2.6n Tabular extension package (FMi)
 \col@sep=\dimen174
 \ar@mcellbox=\box59
@@ -377,120 +404,110 @@ Package: array 2025/09/25 v2.6n Tabular extension package (FMi)
 \TX@delta=\dimen180
 \TX@cols=\count302
 \TX@ftn=\toks40
-) (C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/caption\subcaption.sty
-Package: subcaption 2023/07/28 v1.6b Sub-captions (AR)
- (C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/caption\caption.sty
-Package: caption 2023/08/05 v3.6o Customizing captions (AR)
- (C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/caption\caption3.sty
-Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
-\caption@tempdima=\dimen181
-\captionmargin=\dimen182
-\caption@leftmargin=\dimen183
-\caption@rightmargin=\dimen184
-\caption@width=\dimen185
-\caption@indent=\dimen186
-\caption@parindent=\dimen187
-\caption@hangindent=\dimen188
-Package caption Info: Standard document class detected.
 )
-\c@caption@flags=\count303
-\c@continuedfloat=\count304
-Package caption Info: float package is loaded.
-)
-Package caption Info: New subtype `subfigure' on input line 238.
-\c@subfigure=\count305
-Package caption Info: New subtype `subtable' on input line 238.
-\c@subtable=\count306
-) (C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/geometry\geometry.sty
+(C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/geometry\geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
- (C:\Program Files\MiKTeX\tex/generic/iftex\ifvtex.sty
+
+(C:\Program Files\MiKTeX\tex/generic/iftex\ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
- (C:\Program Files\MiKTeX\tex/generic/iftex\iftex.sty
+
+(C:\Program Files\MiKTeX\tex/generic/iftex\iftex.sty
 Package: iftex 2024/12/12 v1.0g TeX engine tests
 ))
-\Gm@cnth=\count307
-\Gm@cntv=\count308
-\c@Gm@tempcnt=\count309
-\Gm@bindingoffset=\dimen189
-\Gm@wd@mp=\dimen190
-\Gm@odd@mp=\dimen191
-\Gm@even@mp=\dimen192
-\Gm@layoutwidth=\dimen193
-\Gm@layoutheight=\dimen194
-\Gm@layouthoffset=\dimen195
-\Gm@layoutvoffset=\dimen196
+\Gm@cnth=\count303
+\Gm@cntv=\count304
+\c@Gm@tempcnt=\count305
+\Gm@bindingoffset=\dimen181
+\Gm@wd@mp=\dimen182
+\Gm@odd@mp=\dimen183
+\Gm@even@mp=\dimen184
+\Gm@layoutwidth=\dimen185
+\Gm@layoutheight=\dimen186
+\Gm@layouthoffset=\dimen187
+\Gm@layoutvoffset=\dimen188
 \Gm@dimlist=\toks41
- (C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/geometry\geometry.cfg)) (C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/preprint\authblk.sty
+
+(C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/geometry\geometry.cfg))
+(C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/preprint\authblk.sty
 Package: authblk 2001/02/27 1.3 (PWD)
 \affilsep=\skip73
 \@affilsep=\skip74
-\c@Maxaffil=\count310
-\c@authors=\count311
-\c@affil=\count312
-) (C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/cite\cite.sty
-LaTeX Info: Redefining \cite on input line 302.
-LaTeX Info: Redefining \nocite on input line 332.
-Package: cite 2015/02/27  v 5.5
-) (C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/natbib\natbib.sty
+\c@Maxaffil=\count306
+\c@authors=\count307
+\c@affil=\count308
+)
+(C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/natbib\natbib.sty
 Package: natbib 2010/09/13 8.31b (PWD, AO)
-
-
-Package natbib Warning: The `cite' package should not be used
-(natbib)                with natbib. Use option `sort' instead.
-
 \bibhang=\skip75
 \bibsep=\skip76
 LaTeX Info: Redefining \cite on input line 694.
-LaTeX Info: Redefining \citenum on input line 708.
-\c@NAT@ctr=\count313
-) (C:\Program Files\MiKTeX\tex/latex/hyperref\hyperref.sty
+\c@NAT@ctr=\count309
+)
+(C:\Program Files\MiKTeX\tex/latex/hyperref\hyperref.sty
 Package: hyperref 2025-07-12 v7.01o Hypertext links for LaTeX
- (C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/kvsetkeys\kvsetkeys.sty
+
+(C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/kvsetkeys\kvsetkeys.sty
 Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
-) (C:\Users\Admin\AppData\Roaming\MiKTeX\tex/generic/kvdefinekeys\kvdefinekeys.sty
+)
+(C:\Users\Admin\AppData\Roaming\MiKTeX\tex/generic/kvdefinekeys\kvdefinekeys.st
+y
 Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
 ) (C:\Users\Admin\AppData\Roaming\MiKTeX\tex/generic/pdfescape\pdfescape.sty
 Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
- (C:\Users\Admin\AppData\Roaming\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty
+
+(C:\Users\Admin\AppData\Roaming\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty
 Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
-) (C:\Program Files\MiKTeX\tex/generic/pdftexcmds\pdftexcmds.sty
-Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO)
- (C:\Users\Admin\AppData\Roaming\MiKTeX\tex/generic/infwarerr\infwarerr.sty
+)
+(C:\Program Files\MiKTeX\tex/generic/pdftexcmds\pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(C:\Users\Admin\AppData\Roaming\MiKTeX\tex/generic/infwarerr\infwarerr.sty
 Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
 )
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
-)) (C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/hycolor\hycolor.sty
+))
+(C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/hycolor\hycolor.sty
 Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
-) (C:\Program Files\MiKTeX\tex/latex/hyperref\nameref.sty
+)
+(C:\Program Files\MiKTeX\tex/latex/hyperref\nameref.sty
 Package: nameref 2025-06-21 v2.57 Cross-referencing by name of section
- (C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/refcount\refcount.sty
+
+(C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/refcount\refcount.sty
 Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
-) (C:\Users\Admin\AppData\Roaming\MiKTeX\tex/generic/gettitlestring\gettitlestring.sty
+)
+(C:\Users\Admin\AppData\Roaming\MiKTeX\tex/generic/gettitlestring\gettitlestrin
+g.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
  (C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/kvoptions\kvoptions.sty
 Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
 ))
-\c@section@level=\count314
+\c@section@level=\count310
 ) (C:\Program Files\MiKTeX\tex/latex/etoolbox\etoolbox.sty
 Package: etoolbox 2025/10/02 v2.5m e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count315
-) (C:\Users\Admin\AppData\Roaming\MiKTeX\tex/generic/stringenc\stringenc.sty
-Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
+\etb@tempcnta=\count311
 )
-\@linkdim=\dimen197
-\Hy@linkcounter=\count316
-\Hy@pagecounter=\count317
- (C:\Program Files\MiKTeX\tex/latex/hyperref\pd1enc.def
+(C:\Users\Admin\AppData\Roaming\MiKTeX\tex/generic/stringenc\stringenc.sty
+Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO
+)
+)
+\@linkdim=\dimen189
+\Hy@linkcounter=\count312
+\Hy@pagecounter=\count313
+
+(C:\Program Files\MiKTeX\tex/latex/hyperref\pd1enc.def
 File: pd1enc.def 2025-07-12 v7.01o Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
-) (C:\Users\Admin\AppData\Roaming\MiKTeX\tex/generic/intcalc\intcalc.sty
+)
+(C:\Users\Admin\AppData\Roaming\MiKTeX\tex/generic/intcalc\intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 )
-\Hy@SavedSpaceFactor=\count318
- (C:\Program Files\MiKTeX\tex/latex/hyperref\puenc.def
+\Hy@SavedSpaceFactor=\count314
+
+(C:\Program Files\MiKTeX\tex/latex/hyperref\puenc.def
 File: puenc.def 2025-07-12 v7.01o Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
@@ -503,21 +520,25 @@ Package hyperref Info: Plain pages OFF on input line 4210.
 Package hyperref Info: Backreferencing OFF on input line 4215.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4462.
-\c@Hy@tempcnt=\count319
- (C:\Program Files\MiKTeX\tex/latex/url\url.sty
+\c@Hy@tempcnt=\count315
+
+(C:\Program Files\MiKTeX\tex/latex/url\url.sty
 \Urlmuskip=\muskip18
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 4801.
-\XeTeXLinkMargin=\dimen198
- (C:\Users\Admin\AppData\Roaming\MiKTeX\tex/generic/bitset\bitset.sty
+\XeTeXLinkMargin=\dimen190
+
+(C:\Users\Admin\AppData\Roaming\MiKTeX\tex/generic/bitset\bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
- (C:\Users\Admin\AppData\Roaming\MiKTeX\tex/generic/bigintcalc\bigintcalc.sty
-Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
+
+(C:\Users\Admin\AppData\Roaming\MiKTeX\tex/generic/bigintcalc\bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
+)
 ))
-\Fld@menulength=\count320
-\Field@Width=\dimen199
-\Fld@charsize=\dimen256
+\Fld@menulength=\count316
+\Field@Width=\dimen191
+\Fld@charsize=\dimen192
 Package hyperref Info: Hyper figures OFF on input line 6078.
 Package hyperref Info: Link nesting OFF on input line 6083.
 Package hyperref Info: Hyper index ON on input line 6086.
@@ -525,75 +546,79 @@ Package hyperref Info: backreferencing OFF on input line 6093.
 Package hyperref Info: Link coloring ON on input line 6096.
 Package hyperref Info: Link coloring with OCG OFF on input line 6103.
 Package hyperref Info: PDF/A mode OFF on input line 6108.
-\Hy@abspage=\count321
-\c@Item=\count322
-\c@Hfootnote=\count323
+\Hy@abspage=\count317
+\c@Item=\count318
+\c@Hfootnote=\count319
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
- (C:\Program Files\MiKTeX\tex/latex/hyperref\hpdftex.def
+(C:\Program Files\MiKTeX\tex/latex/hyperref\hpdftex.def
 File: hpdftex.def 2025-07-12 v7.01o Hyperref driver for pdfTeX
-\Fld@listcount=\count324
-\c@bookmark@seq@number=\count325
- (C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/rerunfilecheck\rerunfilecheck.sty
+\Fld@listcount=\count320
+\c@bookmark@seq@number=\count321
+
+(C:\Users\Admin\AppData\Roaming\MiKTeX\tex/latex/rerunfilecheck\rerunfilecheck.
+sty
 Package: rerunfilecheck 2025-06-21 v1.11 Rerun checks for auxiliary files (HO)
- (C:\Users\Admin\AppData\Roaming\MiKTeX\tex/generic/uniquecounter\uniquecounter.sty
+
+(C:\Users\Admin\AppData\Roaming\MiKTeX\tex/generic/uniquecounter\uniquecounter.
+sty
 Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 )
-Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 284.
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+84.
 )
 \Hy@SectionHShift=\skip77
 )
-\c@assumption=\count326
-\c@theorem=\count327
+\c@assumption=\count322
+\c@theorem=\count323
  (C:\Program Files\MiKTeX\tex/latex/l3backend\l3backend-pdftex.def
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count328
-) (main.aux)
+\l__color_backend_stack_int=\count324
+)
+(main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for T5/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for T5/cmr/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 25.
+LaTeX Font Info:    ... okay on input line 25.
  (C:\Program Files\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count329
-\scratchdimen=\dimen257
+\scratchcounter=\count325
+\scratchdimen=\dimen193
 \scratchbox=\box61
-\nofMPsegments=\count330
-\nofMParguments=\count331
+\nofMPsegments=\count326
+\nofMParguments=\count327
 \everyMPshowfont=\toks42
-\MPscratchCnt=\count332
-\MPscratchDim=\dimen258
-\MPnumerator=\count333
-\makeMPintoPDFobject=\count334
+\MPscratchCnt=\count328
+\MPscratchDim=\dimen194
+\MPnumerator=\count329
+\makeMPintoPDFobject=\count330
 \everyMPtoPDFconversion=\toks43
 ) (C:\Program Files\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
-Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
- (C:\Program Files\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+
+(C:\Program Files\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
-Package caption Info: Begin \AtBeginDocument code.
-Package caption Info: hyperref package is loaded.
-Package caption Info: End \AtBeginDocument code.
-
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -630,13 +655,16 @@ Package caption Info: End \AtBeginDocument code.
 
 (C:\Program Files\MiKTeX\tex/latex/graphics\color.sty
 Package: color 2025/01/14 v1.3e Standard LaTeX Color (DPC)
- (C:\Program Files\MiKTeX\tex/latex/graphics-cfg\color.cfg
+
+(C:\Program Files\MiKTeX\tex/latex/graphics-cfg\color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package color Info: Driver file: pdftex.def on input line 149.
- (C:\Program Files\MiKTeX\tex/latex/graphics\mathcolor.ltx))
-Package hyperref Info: Link coloring ON on input line 28.
- (main.out) (main.out)
+
+(C:\Program Files\MiKTeX\tex/latex/graphics\mathcolor.ltx))
+Package hyperref Info: Link coloring ON on input line 25.
+ (main.out)
+(main.out)
 \@outlinefile=\write4
 \openout4 = `main.out'.
 
@@ -646,53 +674,135 @@ LaTeX Font Info:    Trying to load font information for U+msa on input line 3.
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
 LaTeX Font Info:    Trying to load font information for U+msb on input line 3.
- (C:\Program Files\MiKTeX\tex/latex/amsfonts\umsb.fd
+
+(C:\Program Files\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )) (parts/2.tex [1
 
-{C:/Users/Admin/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] [2]) (parts/3.tex [3] [4]
-Overfull \hbox (7.88129pt too wide) in paragraph at lines 87--88
-[][]\T5/cmr/bx/n/10 Theorem 1 \T5/cmr/m/n/10 (Con-di-tional A Pri-ori Er-ror Es-ti-mate)\T5/cmr/bx/n/10 . []\T5/cmr/m/it/10 Un-der As-sump-tions (A1)--(A3), let $\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 y[]; u[]; ^^U[]\OT1/cmr/m/n/10 )$
- []
+{C:/Users/Admin/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] [2]) (parts/
+3.tex
+[3] [4] [5] [6]) (parts/4.tex [7]
+<figures/ex1/state_comparison.png, id=284, 889.1619pt x 621.2811pt>
+File: figures/ex1/state_comparison.png Graphic file (type png)
+<use figures/ex1/state_comparison.png>
+Package pdftex.def Info: figures/ex1/state_comparison.png  used on input line 6
+9.
+(pdftex.def)             Requested size: 409.88681pt x 286.39949pt.
+ [8]
+<figures/ex1/control_comparison.png, id=296, 931.3194pt x 343.5234pt>
+File: figures/ex1/control_comparison.png Graphic file (type png)
+<use figures/ex1/control_comparison.png>
+Package pdftex.def Info: figures/ex1/control_comparison.png  used on input line
+ 78.
+(pdftex.def)             Requested size: 384.7926pt x 141.93054pt.
+<figures/ex1/metric_comparison.png, id=297, 569.9694pt x 353.1594pt>
+File: figures/ex1/metric_comparison.png Graphic file (type png)
+<use figures/ex1/metric_comparison.png>
+Package pdftex.def Info: figures/ex1/metric_comparison.png  used on input line 
+85.
+(pdftex.def)             Requested size: 301.14316pt x 186.59697pt.
+ [9 <./figures/ex1/state_comparison.png> <./figures/ex1/control_comparison.png>
+]
+<figures/ex1/indirect_adjoint.png, id=309, 781.2387pt x 322.3242pt>
+File: figures/ex1/indirect_adjoint.png Graphic file (type png)
+<use figures/ex1/indirect_adjoint.png>
+Package pdftex.def Info: figures/ex1/indirect_adjoint.png  used on input line 9
+6.
+(pdftex.def)             Requested size: 342.97107pt x 141.50339pt.
+<figures/ex1/residual_maps.png, id=310, 1066.2234pt x 322.3242pt>
+File: figures/ex1/residual_maps.png Graphic file (type png)
+<use figures/ex1/residual_maps.png>
+Package pdftex.def Info: figures/ex1/residual_maps.png  used on input line 103.
 
-[5]
-Overfull \hbox (8.97975pt too wide) in paragraph at lines 132--133
-\OMS/cmsy/m/n/10 k\OT1/cmr/m/n/10 ^^C[](\OMS/cmsy/m/n/10 ^^A\OML/cmm/m/it/10 ; T\OT1/cmr/m/n/10 )\OMS/cmsy/m/n/10 k[]$\T5/cmr/m/n/10 . By con-struc-tion $\OML/cmm/m/it/10 ^^Q[]$ \T5/cmr/m/n/10 is a quadra-ture es-ti-mate of the con-tin-u-ous quan-tity $\OMS/cmsy/m/n/10 kR[]k[] \OT1/cmr/m/n/10 +
- []
+(pdftex.def)             Requested size: 409.88681pt x 123.91075pt.
+<figures/ex1/stationarity_residual.png, id=311, 568.2831pt x 317.0244pt>
+File: figures/ex1/stationarity_residual.png Graphic file (type png)
+<use figures/ex1/stationarity_residual.png>
+Package pdftex.def Info: figures/ex1/stationarity_residual.png  used on input l
+ine 110.
+(pdftex.def)             Requested size: 351.33154pt x 195.99196pt.
+ [10 <./figures/ex1/metric_comparison.png> <./figures/ex1/indirect_adjoint.png>
+ <./figures/ex1/residual_maps.png>]
+<figures/ex2/state_comparison.png, id=323, 889.1619pt x 621.2811pt>
+File: figures/ex2/state_comparison.png Graphic file (type png)
+<use figures/ex2/state_comparison.png>
+Package pdftex.def Info: figures/ex2/state_comparison.png  used on input line 1
+38.
+(pdftex.def)             Requested size: 409.88681pt x 286.39949pt.
 
-[6] [7]) (parts/4.tex
+[11 <./figures/ex1/stationarity_residual.png>]
+<figures/ex2/control_comparison.png, id=338, 931.3194pt x 343.5234pt>
+File: figures/ex2/control_comparison.png Graphic file (type png)
+<use figures/ex2/control_comparison.png>
+Package pdftex.def Info: figures/ex2/control_comparison.png  used on input line
+ 147.
+(pdftex.def)             Requested size: 384.7926pt x 141.93054pt.
+<figures/ex2/indirect_adjoint.png, id=339, 779.3115pt x 322.3242pt>
+File: figures/ex2/indirect_adjoint.png Graphic file (type png)
+<use figures/ex2/indirect_adjoint.png>
+Package pdftex.def Info: figures/ex2/indirect_adjoint.png  used on input line 1
+54.
+(pdftex.def)             Requested size: 342.97107pt x 141.85751pt.
+<figures/ex2/metric_comparison.png, id=340, 569.9694pt x 353.1594pt>
+File: figures/ex2/metric_comparison.png Graphic file (type png)
+<use figures/ex2/metric_comparison.png>
+Package pdftex.def Info: figures/ex2/metric_comparison.png  used on input line 
+161.
+(pdftex.def)             Requested size: 301.14316pt x 186.59697pt.
+ [12 <./figures/ex2/state_comparison.png> <./figures/ex2/control_comparison.png
+> <./figures/ex2/indirect_adjoint.png>]
+<figures/ex2/residual_maps.png, id=353, 1066.2234pt x 322.3242pt>
+File: figures/ex2/residual_maps.png Graphic file (type png)
+<use figures/ex2/residual_maps.png>
+Package pdftex.def Info: figures/ex2/residual_maps.png  used on input line 172.
 
-LaTeX Warning: Reference `eq:hard_constraint' on page 8 undefined on input line 51.
-
-[8]) (parts/5.tex) (parts/6.tex) (main.bbl)
-
-Package caption Warning: Unused \captionsetup[subfigure] on input line 16.
-See the caption package documentation for explanation.
-
-[9] (main.aux)
+(pdftex.def)             Requested size: 409.88681pt x 123.91075pt.
+<figures/ex2/stationarity_residual.png, id=354, 568.2831pt x 317.0244pt>
+File: figures/ex2/stationarity_residual.png Graphic file (type png)
+<use figures/ex2/stationarity_residual.png>
+Package pdftex.def Info: figures/ex2/stationarity_residual.png  used on input l
+ine 179.
+(pdftex.def)             Requested size: 351.33154pt x 195.99196pt.
+ [13 <./figures/ex2/metric_comparison.png> <./figures/ex2/residual_maps.png> <.
+/figures/ex2/stationarity_residual.png>]) (parts/5.tex) (parts/6.tex)
+(main.bbl) [14] (main.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 490A1F2AF4582EEB391086B73ED260A8;5337.
+(rerunfilecheck)             Checksum: EC5302D4677934336A16BD53B4DA884E;6610.
  ) 
 Here is how much of TeX's memory you used:
- 13992 strings out of 467871
- 214895 string characters out of 5428443
- 638572 words of memory out of 5000000
- 42553 multiletter control sequences out of 15000+600000
+ 12627 strings out of 467871
+ 190098 string characters out of 5428443
+ 619852 words of memory out of 5000000
+ 41174 multiletter control sequences out of 15000+600000
  641003 words of font info for 61 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,13n,79p,1556b,620s stack positions out of 10000i,1000n,20000p,200000b,200000s
- <C:\Users\Admin\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1000.pk><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/symbols/msam10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb><C:/Users/Admin/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnbx10.pfb><C:/Users/Admin/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnbx12.pfb><C:/Users/Admin/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr10.pfb><C:/Users/Admin/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr12.pfb><C:/Users/Admin/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr17.pfb><C:/Users/Admin/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr5.pfb><C:/Users/Admin/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr7.pfb><C:/Users/Admin/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnti10.pfb><C:/Users/Admin/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnti7.pfb>
-Output written on main.pdf (9 pages, 299849 bytes).
+ 75i,12n,79p,1518b,539s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ <C:\Users\Admin\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm
+1000.pk><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/
+Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program File
+s/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Program Files/MiKTeX/font
+s/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX/fonts/type1/publi
+c/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm
+/cmr5.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/
+Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program File
+s/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX/font
+s/type1/public/amsfonts/symbols/msam10.pfb><C:/Program Files/MiKTeX/fonts/type1
+/public/amsfonts/symbols/msbm10.pfb><C:/Users/Admin/AppData/Roaming/MiKTeX/font
+s/type1/vntex/vnr/vnbx10.pfb><C:/Users/Admin/AppData/Roaming/MiKTeX/fonts/type1
+/vntex/vnr/vnbx12.pfb><C:/Users/Admin/AppData/Roaming/MiKTeX/fonts/type1/vntex/
+vnr/vnr10.pfb><C:/Users/Admin/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr1
+2.pfb><C:/Users/Admin/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr17.pfb><C
+:/Users/Admin/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr5.pfb><C:/Users/A
+dmin/AppData/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnr7.pfb><C:/Users/Admin/AppD
+ata/Roaming/MiKTeX/fonts/type1/vntex/vnr/vnti10.pfb><C:/Users/Admin/AppData/Roa
+ming/MiKTeX/fonts/type1/vntex/vnr/vnti7.pfb>
+Output written on main.pdf (14 pages, 2393809 bytes).
 PDF statistics:
- 393 PDF objects out of 1000 (max. 8388607)
- 112 named destinations out of 1000 (max. 500000)
- 209 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 488 PDF objects out of 1000 (max. 8388607)
+ 139 named destinations out of 1000 (max. 500000)
+ 317 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,0 +1,8 @@
+\section{Conclusions}
+
+We developed direct and indirect PINN formulations for a semilinear parabolic optimal-control problem with Dirichlet boundary control. A single network $U_\psi(x,t)$ represents the control on both boundary components. In the indirect method, a boundary lifting enforces the state-control coupling exactly, while the adjoint architecture enforces both its homogeneous boundary condition and terminal condition.
+
+Two manufactured tests were considered. The cubic reaction--diffusion test reproduces the original zero-control setting, whereas the linear KKT test contains a nonzero control and adjoint. In the reported runs, the indirect method produced lower state and control RMSE in both examples. Independent verification-grid residuals also showed consistency with the state, adjoint, and stationarity equations.
+
+The error estimates remain conditional on well-posedness, regularity, stability, and network approximation assumptions. In particular, no efficiency result is claimed for the meshfree residual indicator. Future work should include repeated random seeds, convergence studies with increasing collocation sets, genuinely low-regularity Dirichlet data, and nonlinear tests with nontrivial controls.
+

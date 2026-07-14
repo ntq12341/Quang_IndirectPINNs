@@ -5,4 +5,14 @@ Z.~Zhang, S.~Liu, A.~Alla, J.~Darbon, and G.~E. Karniadakis, ``Pinns in pde
   constrained optimal control problems: Direct vs indirect methods,'' {\em
   arXiv preprint arXiv:2604.04920}, 2026.
 
+\bibitem{lasiecka2000control}
+I.~Lasiecka and R.~Triggiani, {\em Control Theory for Partial Differential
+  Equations: Continuous and Approximation Theories, Volume I}.
+\newblock Cambridge University Press, 2000.
+
+\bibitem{troltzsch2010optimal}
+F.~Tr\"oltzsch, {\em Optimal Control of Partial Differential Equations: Theory,
+  Methods and Applications}.
+\newblock American Mathematical Society, 2010.
+
 \end{thebibliography}

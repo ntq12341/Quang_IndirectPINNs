@@ -7,9 +7,9 @@ In this section, we establish an error estimation framework for the proposed Ind
 Recall the first-order optimality system for our problem: find $(y, u, \lambda)$ such that
 
 \begin{align}
-\partial_t y - \nu \Delta y + f(y) &= 0, \quad &&\text{in } Q, \label{eq:state_res}\\
--\partial_t \lambda - \nu \Delta \lambda + f'(y) \lambda &= -(y - y_d), \quad &&\text{in } Q, \label{eq:adjoint_res}\\
-\alpha u - \partial_n \lambda &= 0, \quad &&\text{on } \Sigma, \label{eq:stat_res}\\
+\partial_t y - \nu \Delta y + f(y)-g &= 0, \quad &&\text{in } Q, \label{eq:state_res}\\
+-\partial_t \lambda - \nu \Delta \lambda + f'(y) \lambda +(y-y_d)&=0, \quad &&\text{in } Q, \label{eq:adjoint_res}\\
+\alpha u +\nu \partial_n \lambda &= 0, \quad &&\text{on } \Sigma, \label{eq:stat_res}\\
 y &= u, \quad &&\text{on } \Sigma, \label{eq:bc_y_res}\\
 \lambda &= 0, \quad &&\text{on } \Sigma, \label{eq:bc_lambda_res}\\
 y(x,0) &= y_0(x), \quad &&\text{in } \Omega, \\
@@ -18,19 +18,19 @@ y(x,0) &= y_0(x), \quad &&\text{in } \Omega, \\
 
 This is precisely the system \eqref{eq:state_opt}--\eqref{eq:bc_lambda_res} of Section~2, and we use the same constant $\alpha$ as in the cost functional \eqref{eq:cost} (we no longer introduce the separate symbols $\beta_Q,\beta_R$ used in an earlier draft, to keep notation consistent across sections; the tracking term always carries weight $1$ and the control term always carries weight $\alpha$).
 
-Let $Y_\theta$, $U_\psi$, $\Lambda_\phi$ be the neural network approximations of $y$, $u$, $\lambda$ built with the hard-constraint construction of Section~2.2.3, so that the Dirichlet conditions \eqref{eq:bc_y_res}--\eqref{eq:bc_lambda_res} hold \emph{exactly, for every parameter value}. We define the residuals of the optimality system:
+Let $Y_\theta$, $U_\psi$, $\Lambda_\phi$ be the neural network approximations built with the hard constraints of Section~2.2.2. The state and adjoint boundary conditions and the adjoint terminal condition hold exactly, whereas the state initial condition is penalized. We define
 
 \begin{align}
-\mathcal{R}_y(x,t;\theta,\psi) &:= \partial_t Y_\theta - \nu \Delta Y_\theta + f(Y_\theta), \label{eq:res_y}\\
+\mathcal{R}_y(x,t;\theta,\psi) &:= \partial_t Y_\theta - \nu \Delta Y_\theta + f(Y_\theta)-g, \label{eq:res_y}\\
 \mathcal{R}_\lambda(x,t;\theta,\phi) &:= -\partial_t \Lambda_\phi - \nu \Delta \Lambda_\phi + f'(Y_\theta) \Lambda_\phi + (Y_\theta - y_d), \label{eq:res_lambda}\\
-\mathcal{R}_u(x,t;\psi,\phi) &:= \alpha U_\psi - \partial_n \Lambda_\phi, \quad (x,t) \in \Sigma. \label{eq:res_u}
+\mathcal{R}_u(x,t;\psi,\phi) &:= \alpha U_\psi +\nu\partial_n \Lambda_\phi, \quad (x,t) \in \Sigma. \label{eq:res_u}
 \end{align}
 
-Because the boundary and initial/terminal conditions are enforced by construction (hard constraints) rather than penalized, the only residuals that remain are the PDE residuals \eqref{eq:res_y}--\eqref{eq:res_u} together with the (typically small, if the hard constraint for the initial condition is not also imposed exactly) initial/terminal mismatches. The indirect PINN loss, matching \eqref{eq:indirect_loss}, is
+Because the boundary and adjoint terminal conditions are enforced by construction, only the three optimality residuals and the state initial mismatch enter the loss:
 
 \begin{equation}
 \label{eq:loss_indirect}
-\mathcal{L}_{\text{ind}}(\theta,\psi,\phi) = w_y \mathcal{L}_y + w_\lambda \mathcal{L}_\lambda + w_u \mathcal{L}_u + w_{\text{ic}} \mathcal{L}_{\text{ic}} + w_T \mathcal{L}_T,
+\mathcal{L}_{\text{ind}}(\theta,\psi,\phi) = w_y \mathcal{L}_y + w_\lambda \mathcal{L}_\lambda + w_u \mathcal{L}_u + w_{\text{ic}} \mathcal{L}_{\text{ic}},
 \end{equation}
 
 where
@@ -39,8 +39,7 @@ where
 \mathcal{L}_y &:= \frac{1}{N_{\text{int}}} \sum_{j=1}^{N_{\text{int}}} |\mathcal{R}_y(x_j,t_j;\theta,\psi)|^2, \\
 \mathcal{L}_\lambda &:= \frac{1}{N_{\text{int}}} \sum_{j=1}^{N_{\text{int}}} |\mathcal{R}_\lambda(x_j,t_j;\theta,\phi)|^2, \\
 \mathcal{L}_u &:= \frac{1}{N_{\text{bc}}} \sum_{j=1}^{N_{\text{bc}}} |\mathcal{R}_u(x_j^b,t_j^b;\psi,\phi)|^2, \\
-\mathcal{L}_{\text{ic}} &:= \frac{1}{N_{\text{ic}}} \sum_{i=1}^{N_{\text{ic}}} |Y_\theta(x_i,0) - y_0(x_i)|^2, \\
-\mathcal{L}_T &:= \frac{1}{N_T} \sum_{i=1}^{N_T} |\Lambda_\phi(x_i,T)|^2.
+\mathcal{L}_{\text{ic}} &:= \frac{1}{N_{\text{ic}}} \sum_{i=1}^{N_{\text{ic}}} |Y_\theta(x_i,0) - y_0(x_i)|^2.
 \end{align}
 
 Each $\mathcal{L}_\bullet$ is a Monte-Carlo (or quasi-Monte-Carlo) quadrature approximation of a continuous $L^2$-norm of the corresponding residual, e.g. $\mathcal{L}_y \approx \|\mathcal{R}_y\|_{L^2(Q)}^2$; this correspondence is what links the \emph{discrete, trainable} loss to the \emph{continuous} PDE residuals used in the estimates below.
@@ -51,7 +50,7 @@ The estimates in this section are conditional on the following standing assumpti
 
 \begin{itemize}
 \item[(A1)] \textbf{Well-posedness.} The optimality system \eqref{eq:state_res}--\eqref{eq:bc_lambda_res} admits a unique solution $(y^*,u^*,\lambda^*)$ in an appropriate energy class, and the linearization of this system about $(y^*,\lambda^*)$ satisfies an inf-sup (stability) condition with constant $C_{\text{stab}}$.
-\item[(A2)] \textbf{Regularity of the Dirichlet control problem.} Dirichlet boundary control of a parabolic equation is, in general, a low-regularity problem: for boundary data $u\in L^2(\Sigma)$ the state $y$ is typically only a \emph{very weak solution} (transposition solution), and the trace $\partial_n\lambda|_\Sigma$ appearing in \eqref{eq:stat_res} need not exist in the classical sense (see e.g.\ Lasiecka \& Triggiani; Tr\"oltzsch, \emph{Optimal Control of Partial Differential Equations}, Ch.\,5). We assume throughout that the data $(y_0, y_d, u^*)$ are smooth enough, and $\Omega$ is regular enough, that $(y^*,\lambda^*)$ lie in $H^{2,1}(Q)$-type spaces in which all traces below are classically well defined. This is a genuine restriction, not a technicality; results that require only $u \in L^2(\Sigma)$ are outside the scope of the estimates below.
+\item[(A2)] \textbf{Regularity of the Dirichlet control problem.} Dirichlet boundary control of a parabolic equation is, in general, a low-regularity problem: for boundary data $u\in L^2(\Sigma)$ the state $y$ is typically only a \emph{very weak solution} (transposition solution), and the trace $\partial_n\lambda|_\Sigma$ appearing in \eqref{eq:stat_res} need not exist in the classical sense~\cite{lasiecka2000control,troltzsch2010optimal}. We assume throughout that the data $(y_0, y_d, u^*)$ are smooth enough, and $\Omega$ is regular enough, that $(y^*,\lambda^*)$ lie in $H^{2,1}(Q)$-type spaces in which all traces below are classically well defined. This is a genuine restriction, not a technicality; results that require only $u \in L^2(\Sigma)$ are outside the scope of the estimates below.
 \item[(A3)] \textbf{Nonlinearity.} $f\in C^1(\mathbb{R})$ and $f'$ is bounded below, $f'(s)\geq -c_f$ for some $c_f\geq 0$ (satisfied by the Allen--Cahn nonlinearity $f(y)=y^3-y$, for which $f'(s) = 3s^2-1 \geq -1$).
 \item[(A4)] \textbf{Approximation capacity.} The network architectures for $Y_\theta, U_\psi, \Lambda_\phi$ are rich enough that the best-approximation error $\epsilon_{\text{net}}$ defined in \eqref{eq:net_approx} can be made arbitrarily small by increasing width/depth. No explicit rate in network size is claimed here; this is treated as an assumption, not a proven property of the architecture.
 \end{itemize}
@@ -78,11 +77,11 @@ where:
     \item $\mathcal{E}_{\text{quad}}$: quadrature (sampling) error between the Monte-Carlo loss $\mathcal{L}_{\text{ind}}$ and the continuous residual norms it estimates.
 \end{itemize}
 
-We no longer list a separate $\mathcal{E}_{\text{bc}}$ term: because the Dirichlet conditions are hard-constrained (Section~2.2.3), the boundary/initial-condition error is identically zero at the level of the construction and does not contribute to \eqref{eq:decomp}; it can only re-enter indirectly through $\mathcal{E}_{\text{approx}}$ if the auxiliary networks $N_\theta, M_\phi$ are not expressive enough.
+We do not list a separate boundary or terminal contribution because these conditions are hard-constrained. The state initial mismatch is retained explicitly in the trainable loss and in the estimator below.
 
 \subsection{A Priori Error Estimate}
 
-\begin{theorem}[Conditional A Priori Error Estimate]
+\begin{theorem}[Conditional a priori estimate]
 \label{thm:apriori}
 Under Assumptions (A1)--(A3), let $(y^*, u^*, \lambda^*)$ be the exact solution of \eqref{eq:state_res}--\eqref{eq:bc_lambda_res}. Suppose the networks $Y_\theta$, $U_\psi$, $\Lambda_\phi$ can approximate $(y^*,\lambda^*,u^*)$ to accuracy $\epsilon_{\text{net}}$ in the $\mathcal{E}$-norm,
 \begin{equation}
@@ -126,10 +125,10 @@ Let $\widehat{Q} = \{(x_k,t_k)\}_{k=1}^{K}\subset Q$ and $\widehat{\Sigma} = \{(
 \eta^2 \;:=\; \sum_{k=1}^{K} \omega_k\,|\mathcal{R}_y(x_k,t_k)|^2
 \;+\; \sum_{k=1}^{K} \omega_k\,|\mathcal{R}_\lambda(x_k,t_k)|^2
 \;+\; \sum_{k=1}^{K_b} \omega_k^b\,|\mathcal{R}_u(x_k^b,t_k^b)|^2
-\;+\; \eta_{\text{ic}}^2 + \eta_T^2,
+\;+\; \eta_{\text{ic}}^2,
 \end{equation}
 
-where $\eta_{\text{ic}}^2$ and $\eta_T^2$ are the analogous quadrature approximations of $\|Y_\theta(\cdot,0)-y_0\|_{L^2(\Omega)}^2$ and $\|\Lambda_\phi(\cdot,T)\|_{L^2(\Omega)}^2$. By construction $\eta^2$ is a quadrature estimate of the continuous quantity $\|\mathcal{R}_y\|_{L^2(Q)}^2+\|\mathcal{R}_\lambda\|_{L^2(Q)}^2+\|\mathcal{R}_u\|_{L^2(\Sigma)}^2+\|Y_\theta(\cdot,0)-y_0\|^2+\|\Lambda_\phi(\cdot,T)\|^2$ that enters Theorem~\ref{thm:apriori}, evaluated on a point set independent of the one used for training. If desired, a \emph{local} (space-time cell) version can still be reported for visualization, $\eta^2 = \sum_{E} \eta^2(E)$ with $E$ ranging over cells of a fixed post-hoc partition of $\overline{Q}$ used only for plotting, but we stress that this partition plays no role in the estimator's derivation and no jump terms are included.
+where $\eta_{\text{ic}}^2$ approximates $\|Y_\theta(\cdot,0)-y_0\|_{L^2(\Omega)}^2$. The adjoint terminal mismatch is identically zero by \eqref{eq:hard_adjoint}. Thus $\eta$ is evaluated on points independent of training and approximates the continuous residual quantity entering Theorem~\ref{thm:apriori}. A post-hoc partition may be used only to visualize local contributions; it introduces no jump terms.
 
 \subsubsection{Reliability}
 
@@ -137,13 +136,13 @@ where $\eta_{\text{ic}}^2$ and $\eta_T^2$ are the analogous quadrature approxima
 \label{thm:reliability}
 Under Assumptions (A1)--(A3), and with $\eta$ as in \eqref{eq:estimator_global} computed on a sufficiently fine verification set,
 \begin{equation}
-\| (e_y, e_\lambda, e_u) \|_{\mathcal{E}} \;\lesssim\; \eta + \mathcal{E}_{\text{quad}},
+\| (e_y, e_\lambda, e_u) \|_{\mathcal{E}} \;\lesssim\; \epsilon_{\rm net}+C_{\rm stab}\bigl(\eta + \mathcal{E}_{\text{quad}}\bigr),
 \end{equation}
 where $\mathcal{E}_{\text{quad}}$ is the (typically negligible, if $K,K_b$ are large) quadrature error of \eqref{eq:estimator_global} itself relative to the exact $L^2$ residual norms.
 \end{theorem}
 
 \begin{proof}[Sketch of proof]
-Immediate from Theorem~\ref{thm:apriori} once one identifies $\eta$ as a quadrature approximation of $\epsilon_{\text{loss}}$: apply \eqref{eq:apriori_estimate} with $\epsilon_{\text{loss}}$ replaced by $\eta + \mathcal{E}_{\text{quad}}$ and $\epsilon_{\text{net}}$ absorbed into the implicit constant (which is legitimate once the network has been trained to near-zero loss, so that $\epsilon_{\text{net}}$ is itself of the same order as $\eta$).
+This follows conditionally from Theorem~\ref{thm:apriori} by identifying $\eta$ as a quadrature approximation of the continuous residual norm and retaining both the best-approximation and verification-quadrature contributions.
 \end{proof}
 
 \subsubsection{On "Efficiency" (Lower Bound)}
