@@ -10,7 +10,11 @@ The implementation uses
 J=\tfrac12\|y-y_d\|_{L^2(Q)}^2+\tfrac\alpha2\|u\|_{L^2(\Sigma)}^2
 \]
 
-and the stationarity convention `alpha*u + nu*d_n(lambda) = 0`. The factor `nu` and the outward-normal signs are covered by tests.
+and the stationarity convention `alpha*u + nu*d_n(lambda) = 0`. The indirect
+training loss divides this residual by `alpha` to avoid attenuating control
+errors by `alpha^2` after squaring. Verification indicators and residual plots
+remain in the original physical scaling. The factor `nu`, scaling, and the
+outward-normal signs are covered by tests.
 
 ## Quick start
 
@@ -37,5 +41,13 @@ Available manufactured problems:
 - `pdf_smoke`: the zero-control experiment from the PDF.
 - `linear_kkt`: a nontrivial manufactured KKT solution with `f=0`.
 - `nonlinear_kkt`: the same KKT construction with `f(y)=y^3`.
+
+The nonlinear KKT test has a dedicated indirect configuration that places
+more weight on the state and adjoint equations after stationarity
+normalization:
+
+```powershell
+python scripts/train.py --method indirect --config configs/indirect_nonlinear.json --output outputs/indirect-nonlinear-balanced-full.pt
+```
 
 Checkpoints contain model weights, configuration, loss history, metrics, and an independently sampled residual indicator.

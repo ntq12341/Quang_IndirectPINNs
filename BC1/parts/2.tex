@@ -1,13 +1,14 @@
 \section{Methodology}
 
-We compare a direct PINN, which minimizes a penalized form of the constrained objective, with an indirect PINN, which solves the first-order optimality system. Both methods use a single control network $U_\psi(x,t)$.
+We compare a direct PINN, which minimizes a penalized form of the constrained objective, with an indirect PINN, which solves the first-order optimality system. Both methods use a single control network $U_\psi(x,t)$. To keep the residual notation common to both formulations, define the state-equation residual operator
+\begin{equation}
+\operatorname{Res}_y[v]:=\partial_tv-\nu\Delta v+f(v)-g.
+\label{eq:state_residual_operator}
+\end{equation}
 
 \subsection{Direct PINN Formulation}
 
-The state and control are approximated by $Y_\theta(x,t)$ and $U_\psi(x,t)$. Define
-\begin{equation}
-r_y(x,t;\theta):=\partial_tY_\theta-\nu\Delta Y_\theta+f(Y_\theta)-g.
-\end{equation}
+The state and control are approximated by $Y_\theta(x,t)$ and $U_\psi(x,t)$. Their state-equation residual is $\mathcal R_y:=\operatorname{Res}_y[Y_\theta]$.
 The direct loss is
 \begin{equation}
 \label{eq:direct_loss}
@@ -20,7 +21,7 @@ The direct loss is
 \end{equation}
 where
 \begin{align}
-\mathcal L_{\rm res}^y&:=\frac1{N_{\rm int}}\sum_{j=1}^{N_{\rm int}}|r_y(x_j,t_j;\theta)|^2,\\
+\mathcal L_{\rm res}^y&:=\frac1{N_{\rm int}}\sum_{j=1}^{N_{\rm int}}|\mathcal R_y(x_j,t_j)|^2,\\
 \mathcal L_{\rm bc}^y&:=\frac1{N_{\rm bc}}\sum_{j=1}^{N_{\rm bc}}|Y_\theta(x_j^b,t_j^b)-U_\psi(x_j^b,t_j^b)|^2,\\
 \mathcal L_{\rm ic}^y&:=\frac1{N_{\rm ic}}\sum_{i=1}^{N_{\rm ic}}|Y_\theta(x_i,0)-y_0(x_i)|^2,\\
 \mathcal L_{\rm track}&:=\frac1{N_{\rm int}}\sum_{j=1}^{N_{\rm int}}|Y_\theta(x_j,t_j)-y_d(x_j,t_j)|^2.
@@ -71,21 +72,27 @@ which enforces both $\Lambda_\phi=0$ on the spatial boundary and $\Lambda_\phi(x
 
 Define
 \begin{align}
-R_y&:=\partial_tY_\theta-\nu\Delta Y_\theta+f(Y_\theta)-g,\\
-R_\lambda&:=-\partial_t\Lambda_\phi-\nu\Delta\Lambda_\phi+f'(Y_\theta)\Lambda_\phi+Y_\theta-y_d,\\
-R_{u,0}&:=\alpha U_\psi(0,t)-\nu\partial_x\Lambda_\phi(0,t),\\
-R_{u,1}&:=\alpha U_\psi(1,t)+\nu\partial_x\Lambda_\phi(1,t).
+\mathcal R_y&:=\operatorname{Res}_y[Y_\theta], \label{eq:res_y}\\
+\mathcal R_\lambda&:=-\partial_t\Lambda_\phi-\nu\Delta\Lambda_\phi+f'(Y_\theta)\Lambda_\phi+Y_\theta-y_d, \label{eq:res_lambda}\\
+\mathcal R_u&:=\alpha U_\psi+\nu\partial_n\Lambda_\phi &&\text{on }\Sigma. \label{eq:res_u}
 \end{align}
+In one space dimension, its two traces are
+\begin{equation}
+\mathcal R_{u,0}(t):=\mathcal R_u(0,t)=\alpha U_\psi(0,t)-\nu\partial_x\Lambda_\phi(0,t),\qquad
+\mathcal R_{u,1}(t):=\mathcal R_u(1,t)=\alpha U_\psi(1,t)+\nu\partial_x\Lambda_\phi(1,t).
+\label{eq:stationarity_traces}
+\end{equation}
 The indirect loss is
 \begin{equation}
 \label{eq:indirect_loss}
-\mathcal L_{\rm ind}=w_y\mathcal L_y+w_\lambda\mathcal L_\lambda+w_{\rm st}\mathcal L_{\rm st}+w_{\rm ic}\mathcal L_{\rm ic},
+\mathcal L_{\rm ind}=w_y\mathcal L_y+w_\lambda\mathcal L_\lambda+w_u\mathcal L_u+w_{\rm ic}\mathcal L_{\rm ic},
 \end{equation}
 with
 \begin{align}
-\mathcal L_y&:=\frac1{N_{\rm int}}\sum_j|R_y(x_j,t_j)|^2,\\
-\mathcal L_\lambda&:=\frac1{N_{\rm int}}\sum_j|R_\lambda(x_j,t_j)|^2,\\
-\mathcal L_{\rm st}&:=\frac12\left(\frac1{N_{\rm bc}}\sum_j|R_{u,0}(t_j^b)|^2+\frac1{N_{\rm bc}}\sum_j|R_{u,1}(t_j^b)|^2\right),\\
+\mathcal L_y&:=\frac1{N_{\rm int}}\sum_j|\mathcal R_y(x_j,t_j)|^2,\\
+\mathcal L_\lambda&:=\frac1{N_{\rm int}}\sum_j|\mathcal R_\lambda(x_j,t_j)|^2,\\
+\mathcal L_u&:=\frac1{2N_{\rm bc}}\sum_j\left(|\mathcal R_{u,0}(t_j^b)|^2+|\mathcal R_{u,1}(t_j^b)|^2\right), \label{eq:boundary_residual_loss}\\
 \mathcal L_{\rm ic}&:=\frac1{N_{\rm ic}}\sum_i|Y_\theta(x_i,0)-y_0(x_i)|^2.
 \end{align}
+Thus $\mathcal L_u$ is the sample mean with respect to time and the normalized counting measure on the two endpoints; the factor $1/2$ is part of its definition throughout the paper.
 There are no state-boundary, adjoint-boundary, or adjoint-terminal penalties because these constraints are satisfied by construction.

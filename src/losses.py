@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import torch
-from .residuals import state_residual, adjoint_residual, stationarity_residual
+from .residuals import adjoint_residual, normalized_stationarity_residual, state_residual
 from .sampling import PointSet
 
 
@@ -50,8 +50,8 @@ def indirect_loss(model, problem, batch: TrainingBatch, weights: dict[str, float
         "state": mse(state_residual(model, problem, batch.interior)),
         "adjoint": mse(adjoint_residual(model, problem, batch.interior)),
         "stationarity": 0.5 * (
-            mse(stationarity_residual(model, problem, batch.left, 0))
-            + mse(stationarity_residual(model, problem, batch.right, 1))
+            mse(normalized_stationarity_residual(model, problem, batch.left, 0))
+            + mse(normalized_stationarity_residual(model, problem, batch.right, 1))
         ),
         "initial": mse(y0 - problem.initial(batch.initial.x)),
     }

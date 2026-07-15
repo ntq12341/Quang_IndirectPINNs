@@ -1,0 +1,23 @@
+[
+  {
+    "checkpoint": "outputs\\direct-nonlinear-full.pt",
+    "method": "direct",
+    "problem": "nonlinear_kkt",
+    "state_relative_l2": 0.002737473182354342,
+    "state_rmse": 0.002094025108352044,
+    "control_relative_l2": 0.015208319679874837,
+    "control_rmse": 0.005719655793122812,
+    "eta": 0.005330600683793744
+  },
+  {
+    "checkpoint": "outputs\\indirect-nonlinear-balanced-full.pt",
+    "method": "indirect",
+    "problem": "nonlinear_kkt",
+    "state_relative_l2": 0.0016314240969865356,
+    "state_rmse": 0.001247954881706733,
+    "control_relative_l2": 0.008711764536869592,
+    "control_rmse": 0.003395989709895282,
+    "adjoint_relative_l2": 0.007918368092642123,
+    "eta": 0.003026801034670486
+  }
+]

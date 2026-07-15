@@ -2,6 +2,9 @@ import pytest
 import torch
 from src.autodiff import derivative, outward_normal_derivative, spatial_derivatives
 from src.problems import make_problem
+from src.models import IndirectPINN
+from src.residuals import normalized_stationarity_residual, stationarity_residual
+from src.sampling import PointSet
 
 
 @pytest.mark.parametrize("name", ["pdf_smoke", "linear_kkt", "nonlinear_kkt"])
@@ -32,3 +35,13 @@ def test_manufactured_solution_satisfies_adjoint_and_stationarity(name):
         stationarity = problem.alpha * problem.control_exact(tb, side) + problem.nu * outward_normal_derivative(lamb, xb, side)
         assert torch.max(torch.abs(stationarity)) < 1e-10
 
+
+def test_normalized_stationarity_preserves_zero_set_and_scaling():
+    problem = make_problem("nonlinear_kkt")
+    model = IndirectPINN(state_hidden=(8,), control_hidden=(8,), adjoint_hidden=(8,)).double()
+    t = torch.linspace(0.1, 0.9, 7, dtype=torch.float64).reshape(-1, 1).requires_grad_()
+    x = torch.zeros_like(t, requires_grad=True)
+    points = PointSet(x, t)
+    physical = stationarity_residual(model, problem, points, 0)
+    normalized = normalized_stationarity_residual(model, problem, points, 0)
+    assert torch.allclose(normalized, physical / problem.alpha)

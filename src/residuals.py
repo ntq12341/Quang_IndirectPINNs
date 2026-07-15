@@ -27,3 +27,16 @@ def stationarity_residual(model, problem: ManufacturedProblem, points: PointSet,
     control = model.control(points.t, side)
     return problem.alpha * control + problem.nu * normal
 
+
+def normalized_stationarity_residual(
+    model, problem: ManufacturedProblem, points: PointSet, side: int
+) -> torch.Tensor:
+    """Stationarity residual scaled to expose control errors to the optimizer.
+
+    Dividing by alpha preserves the zero set of the KKT condition while
+    avoiding the alpha**2 attenuation of control errors in the MSE loss.
+    Diagnostics continue to use ``stationarity_residual`` in physical units.
+    """
+    if problem.alpha <= 0.0:
+        raise ValueError("alpha must be positive to normalize stationarity")
+    return stationarity_residual(model, problem, points, side) / problem.alpha
